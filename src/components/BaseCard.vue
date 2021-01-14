@@ -9,14 +9,6 @@
         {{ sportCategory }}
       </div>
     </div>
-    <!-- <div>
-      <h3 class="text-center text-l text-gray-900 font-medium">
-        {{ cardName }}
-      </h3>
-      <div class="text-center text-gray-400 text-xs font-semibold">
-        {{ sportCategory }}
-      </div>
-    </div> -->
     <div>
       <ul>
         <colored-list-item
