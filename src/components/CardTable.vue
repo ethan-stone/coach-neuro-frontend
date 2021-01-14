@@ -4,12 +4,12 @@
       <div
         v-for="(card, index) in cards"
         :key="index"
-        class="my-1 px-1 md:w-1/2 lg:my-4 lg:px-3 lg:w-1/4"
+        class="my-2 p-2 w-full md:w-1/2 lg:w-1/3 xl:w-1/4"
       >
         <base-card
           :imgSrcUrl="card.imgSrcUrl"
           :cardName="card.cardName"
-          :sportsCategory="card.sportsCategory"
+          :sportCategory="card.sportCategory"
           :cardSummary="card.cardSummary"
           :cardDetailLink="card.cardDetailLink"
         ></base-card>

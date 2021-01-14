@@ -1,6 +1,7 @@
 <template>
+  <the-header></the-header>
   <div class="h-screen w-full flex overflow-hidden">
-    <the-sidebar></the-sidebar>
+    <reports-page-sidebar></reports-page-sidebar>
     <card-table :cards="cardDatas"></card-table>
   </div>
 </template>
@@ -9,7 +10,8 @@
 import BaseCard from "./components/BaseCard.vue";
 import ColoredListItem from "./components/ColoredListItem.vue";
 import CardTable from "./components/CardTable.vue";
-import TheSidebar from "./components/TheSidebar.vue";
+import ReportsPageSidebar from "./components/ReportsPageSidebar.vue";
+import TheHeader from "./components/TheHeader.vue";
 
 export default {
   name: "App",
@@ -17,7 +19,8 @@ export default {
     BaseCard,
     ColoredListItem,
     CardTable,
-    TheSidebar
+    ReportsPageSidebar,
+    TheHeader
   },
   data() {
     return {
