@@ -1,7 +1,7 @@
 <template>
-  <div class="relative bg-white shadow-2xl rounded-lg py-3 h-80 w-72">
+  <div class="overflow-hidden rounded-lg shadow-lg max-h-96 max-w-80">
     <div class="photo-wrapper">
-      <img class="w-12 h-12 rounded-full mx-auto mt-1" :src="imgSrcUrl" />
+      <img class="w-12 h-12 rounded-full mx-auto mt-2" :src="imgSrcUrl" />
       <h3 class="text-center text-l text-gray-900 font-medium">
         {{ cardName }}
       </h3>
@@ -22,10 +22,10 @@
         ></colored-list-item>
       </ul>
     </div>
-    <div class="absolute inset-x-0 bottom-0">
+    <div class="inset-x-0 bottom-0">
       <a
         :href="cardDetailLink"
-        class="block border-2 border-black bg-white py-2 px-2 text-black text-center rounded shadow-lg uppercase font-light my-2 mx-2 hover:bg-black hover:text-white hover:border-black duration-300 ease-in-out"
+        class="block border-2 border-black bg-white py-2 px-2 text-black text-center rounded uppercase font-light my-2 mx-2 hover:bg-black hover:text-white hover:border-black duration-300 ease-in-out"
         >Add to cart</a
       >
     </div>
