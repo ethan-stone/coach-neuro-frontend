@@ -4,21 +4,19 @@
     <ul class="flex items-center">
       <!-- add button -->
       <li class="h-6 w-6">
-        <img
+        <!-- <img
           class="h-full w-full mx-auto"
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Svelte_Logo.svg/512px-Svelte_Logo.svg.png"
           alt="svelte logo"
-        />
+        /> -->
+        <p class="font-bold">CoachNeuro</p>
       </li>
     </ul>
 
     <ul class="flex items-center">
       <!-- add button -->
       <li>
-        <h1 class="pl-8 lg:pl-0 text-gray-700">Svelte</h1>
-      </li>
-      <li>
-        <base-dropdown></base-dropdown>
+        <h1 class="pl-8 lg:pl-0 text-gray-700">My App</h1>
       </li>
     </ul>
 

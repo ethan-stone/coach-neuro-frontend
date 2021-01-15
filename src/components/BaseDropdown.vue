@@ -1,5 +1,5 @@
 <template>
-  <div class="relative inline-block text-left px-3">
+  <div class="relative w-full text-left">
     <div>
       <button
         type="button"
@@ -10,7 +10,7 @@
         v-click-away="onClickAway"
         @click="isClicked = !isClicked"
       >
-        Options
+        Filter 1
         <!-- Heroicon name: chevron-down -->
         <svg
           class="-mr-1 ml-2 h-5 w-5"
@@ -40,7 +40,7 @@
   -->
 
     <div
-      class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+      class="absolute mt-2 w-56 z-10 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
       v-if="isClicked"
     >
       <div
