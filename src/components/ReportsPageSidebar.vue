@@ -3,18 +3,17 @@
     class="flex flex-col bg-white dark:bg-gray-900 w-80 px-12 pt-4 pb-6 border-r-2"
   >
     <button
-      class="mt-8 flex items-center justify-between py-3 px-2 text-white dark:text-gray-200 bg-green-400 dark:bg-green-500 rounded-lg shadow"
+      type="button"
+      class="inline-flex py-3 px-2 justify-center w-full rounded border border-gray-300 shadow-sm bg-green-400 text-sm font-medium text-black hover:bg-green-600 focus:outline-none"
+      @click="emitOpenModalEvent"
     >
-      <!-- Action -->
-      <span>New Analysis</span>
+      <span class="pr-2">New Analysis</span>
       <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
         <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
       </svg>
     </button>
 
     <ul class="text-gray-600">
-      <!-- Links -->
-
       <li class="mt-8">
         <base-dropdown></base-dropdown>
       </li>
@@ -46,6 +45,11 @@ export default {
   name: "ReportsPageSidebar",
   components: {
     BaseDropdown
+  },
+  methods: {
+    emitOpenModalEvent() {
+      this.$emit("open-modal");
+    }
   }
 };
 </script>

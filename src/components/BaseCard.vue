@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden rounded-lg shadow-lg border-2 max-h-96 max-w-80">
+  <div class="overflow-hidden rounded shadow-lg border-2 max-h-96 max-w-80">
     <div class="photo-wrapper">
       <img class="w-12 h-12 rounded-full mx-auto mt-2" :src="imgSrcUrl" />
       <h3 class="text-center text-l text-gray-900 font-medium">

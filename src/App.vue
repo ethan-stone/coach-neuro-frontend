@@ -1,7 +1,13 @@
 <template>
   <the-header></the-header>
   <div class="h-screen w-full flex overflow-hidden">
-    <reports-page-sidebar></reports-page-sidebar>
+    <reports-page-sidebar
+      @open-modal="toggledAnalysisModal"
+    ></reports-page-sidebar>
+    <new-analysis-modal
+      v-if="isAnalysisModalToggled"
+      @close-modal="isAnalysisModalToggled = false"
+    ></new-analysis-modal>
     <card-table :cards="cardDatas"></card-table>
   </div>
 </template>
@@ -12,6 +18,7 @@ import ColoredListItem from "./components/ColoredListItem.vue";
 import CardTable from "./components/CardTable.vue";
 import ReportsPageSidebar from "./components/ReportsPageSidebar.vue";
 import TheHeader from "./components/TheHeader.vue";
+import NewAnalysisModal from "./components/NewAnalysisModal.vue";
 
 export default {
   name: "App",
@@ -20,10 +27,18 @@ export default {
     ColoredListItem,
     CardTable,
     ReportsPageSidebar,
-    TheHeader
+    TheHeader,
+    NewAnalysisModal
+  },
+  methods: {
+    toggledAnalysisModal() {
+      this.isAnalysisModalToggled = true;
+      console.log(this.isAnalysisModalToggled);
+    }
   },
   data() {
     return {
+      isAnalysisModalToggled: false,
       cardDatas: [
         {
           imgSrcUrl:
