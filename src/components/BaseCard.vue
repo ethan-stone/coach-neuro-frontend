@@ -26,7 +26,7 @@
       <a
         :href="cardDetailLink"
         class="block border-2 border-black bg-white py-2 px-2 text-black text-center rounded uppercase font-light my-2 mx-2 hover:bg-black hover:text-white hover:border-black duration-300 ease-in-out"
-        >Add to cart</a
+        >View Details</a
       >
     </div>
   </div>

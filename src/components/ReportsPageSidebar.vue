@@ -43,6 +43,7 @@ import BaseDropdown from "./BaseDropdown.vue";
 
 export default {
   name: "ReportsPageSidebar",
+  emits: ["open-modal"],
   components: {
     BaseDropdown
   },

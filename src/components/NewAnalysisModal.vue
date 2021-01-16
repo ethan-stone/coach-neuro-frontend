@@ -16,45 +16,33 @@
       </div>
       <!-- modal body -->
       <div class="px-6 py-4">
-        <form>
-          <!-- Email Input -->
-          <label class="block text-xs font-semibold text-gray-600 uppercase"
-            >Analysis Name</label
-          >
-          <input
-            id="analysis-name"
-            type="text"
-            name="analysis-name"
-            placeholder="Analysis Name"
-            class="block w-full px-1 mt-2 text-gray-800 appearance-none border-b-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200"
-          />
+        <!-- Email Input -->
+        <label class="block text-xs font-semibold text-gray-600 uppercase"
+          >Name</label
+        >
+        <input
+          id="analysis-name"
+          type="text"
+          name="analysis-name"
+          placeholder="Analysis Name"
+          class="block w-full px-1 mt-2 text-gray-800 appearance-none border-b-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200"
+        />
+        <label class="block text-xs font-semibold text-gray-600 uppercase mt-6"
+          >Category</label
+        >
+        <div class="mt-2">
           <label
-            class="block text-xs font-semibold text-gray-600 uppercase mt-6"
-            >Analysis Name</label
+            v-for="(radioButton, index) in radioButtons"
+            :key="index"
+            class="inline-flex items-center mr-6"
           >
-          <div class="mt-2">
-            <label class="inline-flex items-center">
-              <!-- <input
-                type="radio"
-                class="form-radio color-black"
-                name="accountType"
-                value="personal"
-              /> -->
-              <radio-button></radio-button>
-              <span class="ml-2">Personal</span>
-            </label>
-            <label class="inline-flex items-center ml-6">
-              <input
-                type="radio"
-                class="form-radio text-black"
-                name="accountType"
-                value="busines"
-              />
-              <span class="ml-2">Business</span>
-            </label>
-          </div>
-          <!-- <base-dropdown class="mt-2"></base-dropdown> -->
-        </form>
+            <radio-button
+              :optionName="radioButton.optionName"
+              :isSelected="radioButton.isSelected"
+              @update-radio-buttons="updateRadioButtons"
+            ></radio-button>
+          </label>
+        </div>
       </div>
       <div class="flex justify-end items-center w-100 border-t p-3">
         <button
@@ -79,10 +67,34 @@ import RadioButton from "./RadioButton.vue";
 
 export default {
   name: "NewAnalysisModal",
+  emits: ["close-modal"],
+  data() {
+    return {
+      radioButtons: [
+        {
+          optionName: "basketball",
+          isSelected: false
+        },
+        {
+          optionName: "jumping",
+          isSelected: false
+        }
+      ]
+    };
+  },
   components: { BaseDropdown, RadioButton },
   methods: {
     emitCloseModalEvent() {
       this.$emit("close-modal");
+    },
+    updateRadioButtons(optionName) {
+      this.radioButtons.forEach((e) => {
+        if (e.optionName === optionName) {
+          e.isSelected = true;
+        } else {
+          e.isSelected = false;
+        }
+      });
     }
   }
 };

@@ -1,30 +1,23 @@
 <template>
   <button
-    class="w-3 h-3 border border-gray-500 rounded"
-    :class="cssClass"
+    class="w-3 h-3 border border-gray-500 rounded focus:bg-black focus:outline-none"
     @click="emitUpdateSelectRadioButtonEvent"
   ></button>
+  <span class="ml-2">{{ optionName }}</span>
 </template>
 
 <script>
 export default {
   name: "RadioButton",
-  data() {
-    return {
-      isSelected: false
-    };
+  emits: ["update-radio-buttons"],
+  props: {
+    optionName: String,
+    isSelected: Boolean
   },
   methods: {
     emitUpdateSelectRadioButtonEvent() {
-      this.isSelected = true;
-    }
-  },
-  computed: {
-    cssClass() {
-      if (this.isSelected) {
-        return "bg-black";
-      } else {
-        return "";
+      if (!this.isSelected) {
+        this.$emit("update-radio-buttons", this.optionName);
       }
     }
   }
