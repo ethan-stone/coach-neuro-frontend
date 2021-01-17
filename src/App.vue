@@ -2,11 +2,12 @@
   <the-header></the-header>
   <div class="h-screen w-full flex overflow-hidden">
     <reports-page-sidebar
-      @open-modal="toggledAnalysisModal"
+      @open-modal="toggleAnalysisModal"
     ></reports-page-sidebar>
     <new-analysis-modal
       v-if="isAnalysisModalToggled"
       @close-modal="isAnalysisModalToggled = false"
+      @create-analysis="createAnalysis"
     ></new-analysis-modal>
     <card-table :cards="cardDatas"></card-table>
   </div>
@@ -30,198 +31,79 @@ export default {
     TheHeader,
     NewAnalysisModal
   },
-  methods: {
-    toggledAnalysisModal() {
-      this.isAnalysisModalToggled = true;
-      console.log(this.isAnalysisModalToggled);
-    }
-  },
   data() {
     return {
       isAnalysisModalToggled: false,
-      cardDatas: [
-        {
-          imgSrcUrl:
-            "https://www.gravatar.com/avatar/2acfb745ecf9d4dccb3364752d17f65f?s=260&d=mp",
-          cardName: "Card Name",
-          sportCategory: "Basketball Front",
-          cardSummary: [
-            {
-              color: "red",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Elbow",
-              itemText: "Item Text 1"
-            },
-            {
-              color: "green",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Stance",
-              itemText: "Item Text 2"
-            },
-            {
-              color: "yellow",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Stance",
-              itemText: "Item Text 2"
-            }
-          ],
-          cardDetailLink: "https://www.digitalocean.com/"
-        },
-        {
-          imgSrcUrl:
-            "https://www.gravatar.com/avatar/2acfb745ecf9d4dccb3364752d17f65f?s=260&d=mp",
-          cardName: "Card Name",
-          sportCategory: "Basketball Front",
-          cardSummary: [
-            {
-              color: "red",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Elbow",
-              itemText: "Item Text 1"
-            },
-            {
-              color: "green",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Stance",
-              itemText: "Item Text 2"
-            },
-            {
-              color: "yellow",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Stance",
-              itemText: "Item Text 2"
-            }
-          ],
-          cardDetailLink: "https://www.digitalocean.com/"
-        },
-        {
-          imgSrcUrl:
-            "https://www.gravatar.com/avatar/2acfb745ecf9d4dccb3364752d17f65f?s=260&d=mp",
-          cardName: "Card Name",
-          sportCategory: "Basketball Front",
-          cardSummary: [
-            {
-              color: "red",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Elbow",
-              itemText: "Item Text 1"
-            },
-            {
-              color: "green",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Stance",
-              itemText: "Item Text 2"
-            },
-            {
-              color: "yellow",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Stance",
-              itemText: "Item Text 2"
-            }
-          ],
-          cardDetailLink: "https://www.digitalocean.com/"
-        },
-        {
-          imgSrcUrl:
-            "https://www.gravatar.com/avatar/2acfb745ecf9d4dccb3364752d17f65f?s=260&d=mp",
-          cardName: "Card Name",
-          sportCategory: "Basketball Front",
-          cardSummary: [
-            {
-              color: "red",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Elbow",
-              itemText: "Item Text 1"
-            },
-            {
-              color: "green",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Stance",
-              itemText: "Item Text 2"
-            },
-            {
-              color: "yellow",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Stance",
-              itemText: "Item Text 2"
-            }
-          ],
-          cardDetailLink: "https://www.digitalocean.com/"
-        },
-        {
-          imgSrcUrl:
-            "https://www.gravatar.com/avatar/2acfb745ecf9d4dccb3364752d17f65f?s=260&d=mp",
-          cardName: "Card Name",
-          sportCategory: "Basketball Front",
-          cardSummary: [
-            {
-              color: "red",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Elbow",
-              itemText: "Item Text 1"
-            },
-            {
-              color: "green",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Stance",
-              itemText: "Item Text 2"
-            },
-            {
-              color: "yellow",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Stance",
-              itemText: "Item Text 2"
-            }
-          ],
-          cardDetailLink: "https://www.digitalocean.com/"
-        },
-        {
-          imgSrcUrl:
-            "https://www.gravatar.com/avatar/2acfb745ecf9d4dccb3364752d17f65f?s=260&d=mp",
-          cardName: "Card Name",
-          sportCategory: "Basketball Front",
-          cardSummary: [
-            {
-              color: "red",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Elbow",
-              itemText: "Item Text 1"
-            },
-            {
-              color: "green",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Stance",
-              itemText: "Item Text 2"
-            },
-            {
-              color: "yellow",
-              bgIntensity: 100,
-              textIntensity: 800,
-              itemHeader: "Stance",
-              itemText: "Item Text 2"
-            }
-          ],
-          cardDetailLink: "https://www.digitalocean.com/"
-        }
-      ]
+      cardDatas: []
     };
+  },
+  methods: {
+    toggleAnalysisModal() {
+      this.isAnalysisModalToggled = true;
+      console.log(this.isAnalysisModalToggled);
+    },
+    createAnalysis(analysisData) {
+      // {
+      //     imgSrcUrl:
+      //       "https://www.gravatar.com/avatar/2acfb745ecf9d4dccb3364752d17f65f?s=260&d=mp",
+      //     cardName: "Card Name",
+      //     sportCategory: "Basketball Front",
+      //     cardSummary: [
+      //       {
+      //         color: "red",
+      //         bgIntensity: 400,
+      //         textIntensity: 900,
+      //         itemHeader: "Elbow",
+      //         itemText: "Item Text 1"
+      //       },
+      //       {
+      //         color: "green",
+      //         bgIntensity: 400,
+      //         textIntensity: 900,
+      //         itemHeader: "Stance",
+      //         itemText: "Item Text 2"
+      //       },
+      //       {
+      //         color: "yellow",
+      //         bgIntensity: 400,
+      //         textIntensity: 900,
+      //         itemHeader: "Stance",
+      //         itemText: "Item Text 2"
+      //       }
+      //     ],
+      //     cardDetailLink: "https://www.digitalocean.com/"
+      //   }
+      this.cardDatas.push({
+        imgSrcUrl:
+          "https://www.gravatar.com/avatar/2acfb745ecf9d4dccb3364752d17f65f?s=260&d=mp",
+        cardName: analysisData.newAnalysisName,
+        sportCategory: analysisData.optionName,
+        cardSummary: [
+          {
+            color: "red",
+            bgIntensity: 400,
+            textIntensity: 900,
+            itemHeader: "Elbow",
+            itemText: "Item Text 1"
+          },
+          {
+            color: "green",
+            bgIntensity: 400,
+            textIntensity: 900,
+            itemHeader: "Stance",
+            itemText: "Item Text 2"
+          },
+          {
+            color: "yellow",
+            bgIntensity: 400,
+            textIntensity: 900,
+            itemHeader: "Stance",
+            itemText: "Item Text 2"
+          }
+        ],
+        cardDetailLink: "https://www.digitalocean.com/"
+      });
+    }
   }
 };
 </script>

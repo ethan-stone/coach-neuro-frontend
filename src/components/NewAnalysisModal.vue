@@ -16,15 +16,16 @@
       </div>
       <!-- modal body -->
       <div class="px-6 py-4">
-        <!-- Email Input -->
         <label class="block text-xs font-semibold text-gray-600 uppercase"
           >Name</label
         >
         <input
+          v-model="newAnalysisName"
           id="analysis-name"
           type="text"
           name="analysis-name"
           placeholder="Analysis Name"
+          autocomplete="off"
           class="block w-full px-1 mt-2 text-gray-800 appearance-none border-b-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200"
         />
         <label class="block text-xs font-semibold text-gray-600 uppercase mt-6"
@@ -53,8 +54,9 @@
         </button>
         <button
           class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white"
+          @click="emitCreateAnalysisEvent"
         >
-          Oke
+          Create
         </button>
       </div>
     </div>
@@ -67,9 +69,11 @@ import RadioButton from "./RadioButton.vue";
 
 export default {
   name: "NewAnalysisModal",
-  emits: ["close-modal"],
+  components: { BaseDropdown, RadioButton },
+  emits: ["close-modal", "create-analysis"],
   data() {
     return {
+      newAnalysisName: "",
       radioButtons: [
         {
           optionName: "basketball",
@@ -82,7 +86,6 @@ export default {
       ]
     };
   },
-  components: { BaseDropdown, RadioButton },
   methods: {
     emitCloseModalEvent() {
       this.$emit("close-modal");
@@ -95,6 +98,18 @@ export default {
           e.isSelected = false;
         }
       });
+    },
+    emitCreateAnalysisEvent() {
+      const { optionName, ...rest } = this.radioButtons.find((e) => {
+        return e.isSelected;
+      });
+
+      this.$emit("create-analysis", {
+        newAnalysisName: this.newAnalysisName,
+        optionName: optionName
+      });
+
+      this.emitCloseModalEvent();
     }
   }
 };
