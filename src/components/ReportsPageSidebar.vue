@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import BaseDropdown from "./BaseDropdown.vue";
+import BaseDropdown from "./UI/BaseDropdown.vue";
 
 export default {
   name: "ReportsPageSidebar",

@@ -14,8 +14,6 @@
 </template>
 
 <script>
-import BaseCard from "./components/BaseCard.vue";
-import ColoredListItem from "./components/ColoredListItem.vue";
 import CardTable from "./components/CardTable.vue";
 import ReportsPageSidebar from "./components/ReportsPageSidebar.vue";
 import TheHeader from "./components/TheHeader.vue";
@@ -24,8 +22,6 @@ import NewAnalysisModal from "./components/NewAnalysisModal.vue";
 export default {
   name: "App",
   components: {
-    BaseCard,
-    ColoredListItem,
     CardTable,
     ReportsPageSidebar,
     TheHeader,

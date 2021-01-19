@@ -64,8 +64,8 @@
 </template>
 
 <script>
-import BaseDropdown from "./BaseDropdown.vue";
-import RadioButton from "./RadioButton.vue";
+import BaseDropdown from "./UI/BaseDropdown.vue";
+import RadioButton from "./UI/RadioButton.vue";
 
 export default {
   name: "NewAnalysisModal",
