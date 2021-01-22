@@ -1,7 +1,7 @@
 <template>
   <div class="grid place-items-center">
     <div class="w-11/12 p-12 bg-white sm:w-8/12 md:w-1/2 lg:w-5/12">
-      <form class="mt-24">
+      <form class="mt-48">
         <label
           for="username"
           class="block mt-2 text-xs font-semibold text-gray-600 uppercase"
@@ -14,21 +14,6 @@
           name="username"
           placeholder="username"
           autocomplete="username"
-          class="block w-full p-3 mt-2 rounded text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
-          required
-        />
-        <label
-          for="email"
-          class="block mt-2 text-xs font-semibold text-gray-600 uppercase"
-          >E-mail</label
-        >
-        <input
-          v-model="email"
-          id="email"
-          type="email"
-          name="email"
-          placeholder="john.doe@company.com"
-          autocomplete="email"
           class="block w-full p-3 mt-2 rounded text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
           required
         />
@@ -47,33 +32,13 @@
           class="block w-full p-3 mt-2 rounded text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
           required
         />
-        <label
-          for="password-confirm"
-          class="block mt-2 text-xs font-semibold text-gray-600 uppercase"
-          >Confirm password</label
-        >
-        <input
-          v-model="passwordConfirm"
-          id="password-confirm"
-          type="password"
-          name="password-confirm"
-          placeholder="********"
-          autocomplete="new-password"
-          class="block w-full p-3 mt-2 rounded text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
-          required
-        />
         <button
           type="button"
           class="w-full py-3 mt-6 font-medium tracking-widest rounded text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none"
-          @click="createUser"
+          @click="login"
         >
           Sign up
         </button>
-        <p
-          class="flex justify-between mt-4 text-xs text-gray-500 cursor-pointer hover:text-black"
-        >
-          Already registered?
-        </p>
       </form>
     </div>
   </div>
@@ -85,37 +50,30 @@ export default {
   data() {
     return {
       username: "",
-      email: "",
-      password: "",
-      passwordConfirm: ""
+      password: ""
     };
   },
   methods: {
-    createUser() {
-      if (this.password !== this.passwordConfirm) {
-        console.log("Invalid password");
-      } else {
-        fetch(`${import.meta.env.VITE_API_ROOT}/create-user/`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            username: this.username,
-            email: this.email,
-            password: this.password
-          })
+    login() {
+      fetch(`${import.meta.env.VITE_API_ROOT}/api/token/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: this.username,
+          password: this.password
         })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          this.username = "";
+          this.password = "";
+        });
     }
   }
 };
 </script>
-
-<style></style>

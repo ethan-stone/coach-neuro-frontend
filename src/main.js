@@ -4,6 +4,7 @@ import App from "./App.vue";
 import VueClickAway from "vue3-click-away";
 import "./index.css";
 import AnalysesPage from "./components/pages/AnalysesPage.vue";
+import SignUpPage from "./components/pages/SignUpPage.vue";
 import LoginPage from "./components/pages/LoginPage.vue";
 
 const router = createRouter({
@@ -12,6 +13,10 @@ const router = createRouter({
     {
       path: "/analyses",
       component: AnalysesPage
+    },
+    {
+      path: "/signup",
+      component: SignUpPage
     },
     {
       path: "/login",
