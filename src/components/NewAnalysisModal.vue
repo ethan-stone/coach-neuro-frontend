@@ -66,51 +66,60 @@
 <script>
 import BaseDropdown from "./UI/BaseDropdown.vue";
 import RadioButton from "./UI/RadioButton.vue";
+import { ref } from "vue";
 
 export default {
   name: "NewAnalysisModal",
   components: { BaseDropdown, RadioButton },
   emits: ["close-modal", "create-analysis"],
-  data() {
-    return {
-      newAnalysisName: "",
-      radioButtons: [
-        {
-          optionName: "basketball",
-          isSelected: false
-        },
-        {
-          optionName: "jumping",
-          isSelected: false
-        }
-      ]
-    };
-  },
-  methods: {
-    emitCloseModalEvent() {
-      this.$emit("close-modal");
-    },
-    updateRadioButtons(optionName) {
-      this.radioButtons.forEach((e) => {
+  setup(_, ctx) {
+    const newAnalysisName = ref("");
+    const radioButtons = ref([
+      {
+        optionName: "basketball",
+        isSelected: false
+      },
+      {
+        optionName: "jumping",
+        isSelected: false
+      }
+    ]);
+      
+    function updateRadioButtons(optionName) {
+      radioButtons.value.forEach((e) => {
         if (e.optionName === optionName) {
           e.isSelected = true;
         } else {
           e.isSelected = false;
         }
-      });
-    },
-    emitCreateAnalysisEvent() {
-      const { optionName, ...rest } = this.radioButtons.find((e) => {
+      })
+    }
+
+    function emitCloseModalEvent() {
+      ctx.emit("close-modal");
+    }
+
+    function emitCreateAnalysisEvent() {
+      const { optionName, ...rest } = radioButtons.value.find((e) => {
         return e.isSelected;
       });
 
-      this.$emit("create-analysis", {
-        newAnalysisName: this.newAnalysisName,
+      ctx.emit("create-analysis", {
+        newAnalysisName: newAnalysisName.value,
         optionName: optionName
       });
 
-      this.emitCloseModalEvent();
+      emitCloseModalEvent();
     }
-  }
+
+
+    return {
+      newAnalysisName,
+      radioButtons,
+      updateRadioButtons,
+      emitCloseModalEvent,
+      emitCreateAnalysisEvent
+    }
+  },
 };
 </script>
