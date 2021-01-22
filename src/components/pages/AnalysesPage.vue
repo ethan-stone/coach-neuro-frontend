@@ -16,6 +16,7 @@
 import CardTable from "../CardTable.vue";
 import AnalysesPageSidebar from "../AnalysesPageSidebar.vue";
 import NewAnalysisModal from "../NewAnalysisModal.vue";
+import { ref } from "vue";
 
 export default {
   name: "Analyses",
@@ -24,48 +25,16 @@ export default {
     AnalysesPageSidebar,
     NewAnalysisModal
   },
-  data() {
-    return {
-      isAnalysisModalToggled: false,
-      cardDatas: []
-    };
-  },
-  methods: {
-    toggleAnalysisModal() {
-      this.isAnalysisModalToggled = true;
-    },
-    createAnalysis(analysisData) {
-      // {
-      //     imgSrcUrl:
-      //       "https://www.gravatar.com/avatar/2acfb745ecf9d4dccb3364752d17f65f?s=260&d=mp",
-      //     cardName: "Card Name",
-      //     sportCategory: "Basketball Front",
-      //     cardSummary: [
-      //       {
-      //         color: "red",
-      //         bgIntensity: 400,
-      //         textIntensity: 900,
-      //         itemHeader: "Elbow",
-      //         itemText: "Item Text 1"
-      //       },
-      //       {
-      //         color: "green",
-      //         bgIntensity: 400,
-      //         textIntensity: 900,
-      //         itemHeader: "Stance",
-      //         itemText: "Item Text 2"
-      //       },
-      //       {
-      //         color: "yellow",
-      //         bgIntensity: 400,
-      //         textIntensity: 900,
-      //         itemHeader: "Stance",
-      //         itemText: "Item Text 2"
-      //       }
-      //     ],
-      //     cardDetailLink: "https://www.digitalocean.com/"
-      //   }
-      this.cardDatas.push({
+  setup() {
+    const isAnalysisModalToggled = ref(false)
+    const cardDatas = ref([])
+
+    function toggleAnalysisModal() {
+      isAnalysisModalToggled.value = true;
+    }
+
+    function createAnalysis(analysisData) {
+      cardDatas.value.push({
         imgSrcUrl:
           "https://www.gravatar.com/avatar/2acfb745ecf9d4dccb3364752d17f65f?s=260&d=mp",
         cardName: analysisData.newAnalysisName,
@@ -94,9 +63,16 @@ export default {
           }
         ],
         cardDetailLink: "https://www.digitalocean.com/"
-      });
+      })
     }
-  }
+
+    return {
+      isAnalysisModalToggled,
+      cardDatas,
+      toggleAnalysisModal,
+      createAnalysis
+    }
+  },
 };
 </script>
 
