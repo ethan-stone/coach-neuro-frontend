@@ -65,7 +65,7 @@
         <button
           type="button"
           class="w-full py-3 mt-6 font-medium tracking-widest rounded text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none"
-          @click="createUser"
+          @click="signup"
         >
           Sign up
         </button>
@@ -80,20 +80,19 @@
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
   name: "SignUpPage",
-  data() {
-    return {
-      username: "",
-      email: "",
-      password: "",
-      passwordConfirm: ""
-    };
-  },
-  methods: {
-    createUser() {
-      if (this.password !== this.passwordConfirm) {
-        console.log("Invalid password");
+  setup() {
+    const username = ref("")
+    const email = ref("")
+    const password = ref("")
+    const passwordConfirm = ref("")
+
+    function signup() {
+      if (password.value !== passwordConfirm.value) {
+        console.log('Invalid password')
       } else {
         fetch(`${import.meta.env.VITE_API_ROOT}/create-user/`, {
           method: "POST",
@@ -101,19 +100,28 @@ export default {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            username: this.username,
-            email: this.email,
-            password: this.password
+            username: username.value,
+            email: email.value,
+            password: password.value
           })
         })
           .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+          console.log(response)
+        })
+          .catch(error => {
+          console.log(error)
+        })
       }
     }
+
+    return {
+      username,
+      email, 
+      password,
+      passwordConfirm,
+      signup
+    }
+
   }
 };
 </script>
