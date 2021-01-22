@@ -47,9 +47,13 @@ export default {
   components: {
     BaseDropdown
   },
-  methods: {
-    emitOpenModalEvent() {
-      this.$emit("open-modal");
+  setup(_, ctx) {
+    function emitOpenModalEvent() {
+      ctx.emit("open-modal")
+    }
+
+    return {
+      emitOpenModalEvent
     }
   }
 };

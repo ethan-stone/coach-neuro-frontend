@@ -33,7 +33,6 @@ export default {
   methods: {
     toggleAnalysisModal() {
       this.isAnalysisModalToggled = true;
-      console.log(this.isAnalysisModalToggled);
     },
     createAnalysis(analysisData) {
       // {
