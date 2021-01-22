@@ -45,24 +45,23 @@
 </template>
 
 <script>
+import { ref } from "vue"
+
 export default {
   name: "LoginPage",
-  data() {
-    return {
-      username: "",
-      password: ""
-    };
-  },
-  methods: {
-    login() {
+  setup() {
+    const username = ref("")
+    const password = ref("")
+
+    function login() {
       fetch(`${import.meta.env.VITE_API_ROOT}/api/token/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          username: this.username,
-          password: this.password
+          username: username.value,
+          password: password.value
         })
       })
         .then((response) => {
@@ -70,10 +69,16 @@ export default {
         })
         .then((data) => {
           console.log(data);
-          this.username = "";
-          this.password = "";
+          username.value = "";
+          password.value = "";
         });
     }
-  }
+
+    return {
+      username,
+      password,
+      login
+    }
+  },
 };
 </script>
