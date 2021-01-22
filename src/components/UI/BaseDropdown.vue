@@ -82,16 +82,20 @@
 </template>
 
 <script>
+import { ref } from "vue"
+
 export default {
   name: "BaseDropdown",
-  data() {
+  setup() {
+    const isClicked = ref(false)
+
+    function onClickAway() {
+      isClicked.value = false
+    }
+
     return {
-      isClicked: false
-    };
-  },
-  methods: {
-    onClickAway() {
-      this.isClicked = false;
+      isClicked,
+      onClickAway
     }
   }
 };
