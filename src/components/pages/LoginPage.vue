@@ -46,32 +46,20 @@
 
 <script>
 import { ref } from "vue"
+import useAuth from "../composables/useAuth"
 
 export default {
   name: "LoginPage",
   setup() {
+    const { accessToken, refreshToken, getTokenPair } = useAuth();
+
     const username = ref("")
     const password = ref("")
 
-    function login() {
-      fetch(`${import.meta.env.VITE_API_ROOT}/api/token/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          username: username.value,
-          password: password.value
-        })
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-          username.value = "";
-          password.value = "";
-        });
+    async function login() {
+      const success = await getTokenPair(username.value, password.value)
+      console.log(accessToken.value)
+      console.log(refreshToken.value)
     }
 
     return {
