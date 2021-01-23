@@ -1,6 +1,7 @@
 import { ref } from "vue";
 
 export default function userAuth() {
+
   const accessToken = ref("")
   const refreshToken = ref("")
 
@@ -32,6 +33,9 @@ export default function userAuth() {
     
     refreshToken.value = refresh;
     accessToken.value = access;
+
+    console.log("refresh token: " + refreshToken.value)
+    console.log("access token:" + accessToken.value)
 
     return isSuccess;
   }

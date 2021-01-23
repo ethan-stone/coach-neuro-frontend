@@ -53,13 +53,11 @@ export default {
   setup() {
     const { accessToken, refreshToken, getTokenPair } = useAuth();
 
-    const username = ref("")
-    const password = ref("")
+    const username = ref("");
+    const password = ref("");
 
     async function login() {
-      const success = await getTokenPair(username.value, password.value)
-      console.log(accessToken.value)
-      console.log(refreshToken.value)
+      const success = await getTokenPair(username.value, password.value);
     }
 
     return {
