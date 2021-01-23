@@ -1,8 +1,8 @@
 <template>
   <button
     class="w-3 h-3 border border-gray-400 rounded focus:outline-none"
-    :class="cssClass"
-    @click="emitUpdateSelectRadioButtonEvent"
+    :class="{'bg-black': isSelected}"
+    @click="emitUpdateSelectedRadioButtonEvent"
   ></button>
   <span class="ml-2">{{ optionName }}</span>
 </template>
@@ -15,19 +15,16 @@ export default {
     optionName: String,
     isSelected: Boolean
   },
-  methods: {
-    emitUpdateSelectRadioButtonEvent() {
-      if (!this.isSelected) {
-        this.$emit("update-radio-buttons", this.optionName);
-        console.log("updating radio buttons");
+  setup(props, ctx) {
+    function emitUpdateSelectedRadioButtonEvent() {
+      if (!props.isSelected) {
+        console.log(props.optionName)
+        ctx.emit("update-radio-buttons", props.optionName)
       }
     }
-  },
-  computed: {
-    cssClass() {
-      if (this.isSelected) {
-        return ["bg-black"];
-      }
+
+    return {
+      emitUpdateSelectedRadioButtonEvent
     }
   }
 };
