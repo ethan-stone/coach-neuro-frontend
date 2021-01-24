@@ -37,7 +37,7 @@
           class="w-full py-3 mt-6 font-medium tracking-widest rounded text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none"
           @click="login"
         >
-          Sign up
+          Login
         </button>
       </form>
     </div>
@@ -51,7 +51,7 @@ import useAuth from "../../composables/useAuth"
 export default {
   name: "LoginPage",
   setup() {
-    const { user, accessToken, getTokenPair } = useAuth();
+    const { user, accessToken, getTokenPair, refreshAccessToken } = useAuth();
 
     const username = ref("");
     const password = ref("");
@@ -59,8 +59,15 @@ export default {
     async function login() {
       const success = await getTokenPair(username.value, password.value);
       if (success) {
-        console.log(accessToken)
+        console.log(accessToken.value)
         console.log(user)
+      }
+    }
+
+    async function refresh() {
+      const success = await refreshAccessToken();
+      if (succuess) {
+        console.log(accessToken.value)
       }
     }
 

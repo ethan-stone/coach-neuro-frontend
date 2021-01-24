@@ -27,7 +27,6 @@ export default function userAuth() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         isSuccess = true;
         return data;
       })
@@ -44,10 +43,33 @@ export default function userAuth() {
     return isSuccess;
   }
 
+  async function refreshAccessToken() {
+    
+    var isSuccess = false;
+
+    const access = await fetch(`${import.meta.env.VITE_API_ROOT}/refresh-access-token/`, {
+      method: "POST"
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        isSuccess = true;
+        return data;
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    
+    accessToken.value = access;
+
+    return isSuccess;
+  }
+
   return {
     user,
     accessToken,
-    getTokenPair
+    getTokenPair,
+    refreshAccessToken
   }
 
 }
