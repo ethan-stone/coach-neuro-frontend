@@ -46,8 +46,8 @@
 
 <script>
 import { ref } from "vue"
-import useAuth from "../../composables/useAuth"
 import { useRouter } from "vue-router"
+import useAuth from "../../composables/useAuth"
 
 export default {
   name: "LoginPage",
@@ -61,6 +61,7 @@ export default {
     async function login() {
       const success = await getTokenPair(username.value, password.value);
       if (success) {
+        console.log("Token 1: " + accessToken.value)
         router.push("/analyses")
       }
     }
@@ -68,7 +69,7 @@ export default {
     async function refresh() {
       const success = await refreshAccessToken();
       if (succuess) {
-        console.log(accessToken.value)
+        console.log(accessToken)
       }
     }
 

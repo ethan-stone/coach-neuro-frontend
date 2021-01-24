@@ -1,9 +1,10 @@
-import { ref, reactive, watch } from "vue";
+import { ref, reactive, computed } from "vue";
+
+const accessToken = ref("");
+const user = reactive({});
 
 export default function userAuth() {
 
-  const accessToken = ref("")
-  const user = reactive({})
 
   /*
   - returns a boolean. true if successful, false otherwise

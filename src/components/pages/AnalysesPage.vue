@@ -17,6 +17,8 @@ import CardTable from "../CardTable.vue";
 import AnalysesPageSidebar from "../AnalysesPageSidebar.vue";
 import NewAnalysisModal from "../NewAnalysisModal.vue";
 import { ref } from "vue";
+import useAuth from "../../composables/useAuth";
+
 
 export default {
   name: "Analyses",
@@ -25,9 +27,20 @@ export default {
     AnalysesPageSidebar,
     NewAnalysisModal
   },
-  setup() {
+  async setup() {
+    const { user, accessToken, getTokenPair, refreshAccessToken } = useAuth();
+
     const isAnalysisModalToggled = ref(false)
     const cardDatas = ref([])
+
+    const analyses = await fetch(`${import.meta.env.VITE_API_ROOT}/users/analyses/`, {
+      method: "GET", 
+      headers: {
+        "Authorization": "Token " + accessToken
+      }
+    })
+
+    console.log(analyses)
 
     function toggleAnalysisModal() {
       isAnalysisModalToggled.value = true;
