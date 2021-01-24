@@ -47,11 +47,13 @@
 <script>
 import { ref } from "vue"
 import useAuth from "../../composables/useAuth"
+import { useRouter } from "vue-router"
 
 export default {
   name: "LoginPage",
   setup() {
     const { user, accessToken, getTokenPair, refreshAccessToken } = useAuth();
+    const router = useRouter();
 
     const username = ref("");
     const password = ref("");
@@ -59,8 +61,7 @@ export default {
     async function login() {
       const success = await getTokenPair(username.value, password.value);
       if (success) {
-        console.log(accessToken.value)
-        console.log(user)
+        router.push("/analyses")
       }
     }
 
