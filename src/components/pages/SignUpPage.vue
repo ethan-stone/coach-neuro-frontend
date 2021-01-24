@@ -85,14 +85,14 @@ import { ref } from "vue";
 export default {
   name: "SignUpPage",
   setup() {
-    const username = ref("")
-    const email = ref("")
-    const password = ref("")
-    const passwordConfirm = ref("")
+    const username = ref("");
+    const email = ref("");
+    const password = ref("");
+    const passwordConfirm = ref("");
 
     function signup() {
       if (password.value !== passwordConfirm.value) {
-        console.log('Invalid password')
+        console.log("Invalid password");
       } else {
         fetch(`${import.meta.env.VITE_API_ROOT}/create-user/`, {
           method: "POST",
@@ -106,22 +106,21 @@ export default {
           })
         })
           .then((response) => {
-          console.log(response)
-        })
-          .catch(error => {
-          console.log(error)
-        })
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     }
 
     return {
       username,
-      email, 
+      email,
       password,
       passwordConfirm,
       signup
-    }
-
+    };
   }
 };
 </script>

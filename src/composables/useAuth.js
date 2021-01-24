@@ -4,8 +4,6 @@ const accessToken = ref("");
 const user = reactive({});
 
 export default function userAuth() {
-
-
   /*
   - returns a boolean. true if successful, false otherwise
 
@@ -13,19 +11,21 @@ export default function userAuth() {
   - refresh token will be stored in an httpOnly cookie that is automatically be sent with every request
   */
   async function getTokenPair(username, password) {
-
     var isSuccess = false;
 
-    const { access, userInfo } = await fetch(`${import.meta.env.VITE_API_ROOT}/token-pair/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password
-      })
-    })
+    const { access, userInfo } = await fetch(
+      `${import.meta.env.VITE_API_ROOT}/token-pair/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password
+        })
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         isSuccess = true;
@@ -33,7 +33,7 @@ export default function userAuth() {
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
 
     accessToken.value = access;
 
@@ -45,12 +45,14 @@ export default function userAuth() {
   }
 
   async function refreshAccessToken() {
-    
     var isSuccess = false;
 
-    const access = await fetch(`${import.meta.env.VITE_API_ROOT}/refresh-access-token/`, {
-      method: "POST"
-    })
+    const access = await fetch(
+      `${import.meta.env.VITE_API_ROOT}/refresh-access-token/`,
+      {
+        method: "POST"
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -58,9 +60,9 @@ export default function userAuth() {
         return data;
       })
       .catch((error) => {
-        console.log(error)
-      })
-    
+        console.log(error);
+      });
+
     accessToken.value = access;
 
     return isSuccess;
@@ -71,6 +73,5 @@ export default function userAuth() {
     accessToken,
     getTokenPair,
     refreshAccessToken
-  }
-
+  };
 }

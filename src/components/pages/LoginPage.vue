@@ -45,9 +45,9 @@
 </template>
 
 <script>
-import { ref } from "vue"
-import { useRouter } from "vue-router"
-import useAuth from "../../composables/useAuth"
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import useAuth from "../../composables/useAuth";
 
 export default {
   name: "LoginPage",
@@ -58,19 +58,15 @@ export default {
     const username = ref("");
     const password = ref("");
 
-    async function login() {
-      const success = await getTokenPair(username.value, password.value);
+    function login() {
+      const success = getTokenPair(username.value, password.value);
       if (success) {
-        console.log("Token 1: " + accessToken.value)
-        router.push("/analyses")
+        router.push("/analyses");
       }
     }
 
     async function refresh() {
       const success = await refreshAccessToken();
-      if (succuess) {
-        console.log(accessToken)
-      }
     }
 
     return {
@@ -78,7 +74,7 @@ export default {
       password,
       login,
       user
-    }
-  },
+    };
+  }
 };
 </script>

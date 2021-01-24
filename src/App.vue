@@ -1,7 +1,14 @@
 <template>
   <the-navbar></the-navbar>
   <main>
-    <router-view></router-view>
+    <Suspense>
+      <template #default>
+        <router-view></router-view>
+      </template>
+      <template #fallback>
+        <span>Loading... please wait</span>
+      </template>
+    </Suspense>
   </main>
 </template>
 
