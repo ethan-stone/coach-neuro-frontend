@@ -1,18 +1,21 @@
-import { ref } from "vue";
+import { ref, reactive, watch } from "vue";
 
 export default function userAuth() {
 
   const accessToken = ref("")
-  const refreshToken = ref("")
+  const user = reactive({})
 
   /*
-  returns a boolean. true if successful, false otherwise
+  - returns a boolean. true if successful, false otherwise
+
+  - access token will be in the response body
+  - refresh token will be stored in an httpOnly cookie that is automatically be sent with every request
   */
   async function getTokenPair(username, password) {
 
     var isSuccess = false;
 
-    const { refresh, access } = await fetch(`${import.meta.env.VITE_API_ROOT}/api/token/`, {
+    const { access, userInfo } = await fetch(`${import.meta.env.VITE_API_ROOT}/token-pair/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -24,25 +27,26 @@ export default function userAuth() {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data)
         isSuccess = true;
         return data;
       })
       .catch((error) => {
         console.log(error);
       })
-    
-    refreshToken.value = refresh;
+
     accessToken.value = access;
 
-    console.log("refresh token: " + refreshToken.value)
-    console.log("access token:" + accessToken.value)
+    user.id = userInfo.id;
+    user.email = userInfo.email;
+    user.username = userInfo.username;
 
     return isSuccess;
   }
 
   return {
+    user,
     accessToken,
-    refreshToken,
     getTokenPair
   }
 
