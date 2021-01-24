@@ -6,7 +6,6 @@ const user = reactive({});
 export default function userAuth() {
   /*
   - returns a boolean. true if successful, false otherwise
-
   - access token will be in the response body
   - refresh token will be stored in an httpOnly cookie that is automatically be sent with every request
   */
