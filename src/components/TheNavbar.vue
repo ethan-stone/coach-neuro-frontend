@@ -51,12 +51,13 @@
 </template>
 
 <script>
+import { defineComponent } from "vue";
 import BaseDropdown from "./UI/BaseDropdown.vue";
 
-export default {
-  name: "TheHeader",
+export default defineComponent({
+  name: "TheNavbar",
   components: {
     BaseDropdown
   }
-};
+});
 </script>

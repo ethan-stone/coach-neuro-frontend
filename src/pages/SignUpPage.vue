@@ -80,9 +80,9 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { defineComponent, ref } from "vue";
 
-export default {
+export default defineComponent({
   name: "SignUpPage",
   setup() {
     const username = ref("");
@@ -122,7 +122,7 @@ export default {
       signup
     };
   }
-};
+});
 </script>
 
 <style></style>

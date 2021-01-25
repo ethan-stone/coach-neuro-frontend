@@ -82,21 +82,22 @@
 </template>
 
 <script>
-import { ref } from "vue"
+import { defineComponent } from "vue";
+import { ref } from "vue";
 
-export default {
+export default defineComponent({
   name: "BaseDropdown",
   setup() {
-    const isClicked = ref(false)
+    const isClicked = ref(false);
 
     function onClickAway() {
-      isClicked.value = false
+      isClicked.value = false;
     }
 
     return {
       isClicked,
       onClickAway
-    }
+    };
   }
-};
+});
 </script>

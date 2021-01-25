@@ -33,8 +33,9 @@
 </template>
 
 <script>
+import { defineComponent } from "vue";
 import ColoredListItem from "./ColoredListItem.vue";
-export default {
+export default defineComponent({
   name: "BaseCard",
   components: {
     ColoredListItem
@@ -47,7 +48,7 @@ export default {
     cardSummary: Array,
     cardDetailLink: String
   }
-};
+});
 </script>
 
 <style></style>

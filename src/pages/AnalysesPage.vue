@@ -13,13 +13,13 @@
 </template>
 
 <script>
-import CardTable from "../CardTable.vue";
-import AnalysesPageSidebar from "../AnalysesPageSidebar.vue";
-import NewAnalysisModal from "../NewAnalysisModal.vue";
-import { ref } from "vue";
-import useAuth from "../../composables/useAuth";
+import CardTable from "../components/CardTable.vue";
+import AnalysesPageSidebar from "../components/AnalysesPageSidebar.vue";
+import NewAnalysisModal from "../components/NewAnalysisModal.vue";
+import { defineComponent, ref } from "vue";
+import useAuth from "../composables/auth";
 
-export default {
+export default defineComponent({
   name: "Analyses",
   components: {
     CardTable,
@@ -88,7 +88,7 @@ export default {
       createAnalysis
     };
   }
-};
+});
 </script>
 
 <style></style>

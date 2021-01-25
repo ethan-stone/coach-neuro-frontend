@@ -39,9 +39,10 @@
 </template>
 
 <script>
+import { defineComponent } from "vue";
 import BaseDropdown from "./UI/BaseDropdown.vue";
 
-export default {
+export default defineComponent({
   name: "ReportsPageSidebar",
   emits: ["open-modal"],
   components: {
@@ -49,14 +50,14 @@ export default {
   },
   setup(_, ctx) {
     function emitOpenModalEvent() {
-      ctx.emit("open-modal")
+      ctx.emit("open-modal");
     }
 
     return {
       emitOpenModalEvent
-    }
+    };
   }
-};
+});
 </script>
 
 <style></style>

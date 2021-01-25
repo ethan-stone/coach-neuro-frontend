@@ -45,14 +45,14 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
-import useAuth from "../../composables/useAuth";
+import useAuth from "../composables/auth";
 
-export default {
+export default defineComponent({
   name: "LoginPage",
   setup() {
-    const { user, accessToken, getTokenPair, refreshAccessToken } = useAuth();
+    const { user, _, getTokenPair, __ } = useAuth();
     const router = useRouter();
 
     const username = ref("");
@@ -76,5 +76,5 @@ export default {
       user
     };
   }
-};
+});
 </script>

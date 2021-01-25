@@ -64,11 +64,11 @@
 </template>
 
 <script>
+import { defineComponent, ref } from "vue";
 import BaseDropdown from "./UI/BaseDropdown.vue";
 import RadioButton from "./UI/RadioButton.vue";
-import { ref } from "vue";
 
-export default {
+export default defineComponent({
   name: "NewAnalysisModal",
   components: { BaseDropdown, RadioButton },
   emits: ["close-modal", "create-analysis"],
@@ -84,7 +84,7 @@ export default {
         isSelected: false
       }
     ]);
-      
+
     function updateRadioButtons(optionName) {
       radioButtons.value.forEach((e) => {
         if (e.optionName === optionName) {
@@ -92,7 +92,7 @@ export default {
         } else {
           e.isSelected = false;
         }
-      })
+      });
     }
 
     function emitCloseModalEvent() {
@@ -112,14 +112,13 @@ export default {
       emitCloseModalEvent();
     }
 
-
     return {
       newAnalysisName,
       radioButtons,
       updateRadioButtons,
       emitCloseModalEvent,
       emitCreateAnalysisEvent
-    }
-  },
-};
+    };
+  }
+});
 </script>

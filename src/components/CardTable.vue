@@ -19,9 +19,10 @@
 </template>
 
 <script>
+import { defineComponent } from "vue";
 import BaseCard from "./UI/BaseCard.vue";
 
-export default {
+export default defineComponent({
   name: "CardTable",
   components: {
     BaseCard
@@ -29,7 +30,7 @@ export default {
   props: {
     cards: Array
   }
-};
+});
 </script>
 
 <style></style>

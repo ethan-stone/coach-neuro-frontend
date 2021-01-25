@@ -1,7 +1,13 @@
 import { ref, reactive, computed } from "vue";
 
+interface UserInfo {
+  id: number;
+  username: string;
+  email: string;
+}
+
 const accessToken = ref("");
-const user = reactive({});
+const user: UserInfo = reactive({ id: 0, username: "", email: "" });
 
 export default function userAuth() {
   /*
@@ -37,8 +43,8 @@ export default function userAuth() {
     accessToken.value = access;
 
     user.id = userInfo.id;
-    user.email = userInfo.email;
     user.username = userInfo.username;
+    user.email = userInfo.email;
 
     return isSuccess;
   }
