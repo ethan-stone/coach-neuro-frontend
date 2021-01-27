@@ -8,16 +8,17 @@
       @close-modal="isAnalysisModalToggled = false"
       @create-analysis="createAnalysis"
     ></new-analysis-modal>
-    <card-table :cards="cardDatas"></card-table>
+    <card-table :cards="analyses"></card-table>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, ref } from "vue";
 import CardTable from "../components/CardTable.vue";
 import AnalysesPageSidebar from "../components/AnalysesPageSidebar.vue";
 import NewAnalysisModal from "../components/NewAnalysisModal.vue";
-import { defineComponent, ref } from "vue";
-import useAuth from "../composables/auth";
+import Analysis from "../interfaces/analysis";
+import { accessToken, refreshAccessToken } from "../composables/use-auth";
 
 export default defineComponent({
   name: "Analyses",
@@ -27,63 +28,41 @@ export default defineComponent({
     NewAnalysisModal
   },
   async setup() {
-    const { user, accessToken, getTokenPair, refreshAccessToken } = useAuth();
-
     const isAnalysisModalToggled = ref(false);
-    const cardDatas = ref([]);
+    const analyses = ref<Analysis[]>([]);
 
-    // const analyses = await fetch(
-    //   `${import.meta.env.VITE_API_ROOT}/users/analyses/`,
-    //   {
-    //     method: "GET",
-    //     headers: {
-    //       Authorization: "Token " + accessToken.value
-    //     }
-    //   }
-    // )
-    //   .then((response) => response.json())
-    //   .then((data) => data);
+    try {
+    } catch {}
+    analyses.value = await fetch(
+      `${import.meta.env.VITE_API_ROOT}/users/analyses/`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Token " + accessToken.value
+        }
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => data);
 
     function toggleAnalysisModal() {
       isAnalysisModalToggled.value = true;
     }
 
-    function createAnalysis(analysisData) {
-      cardDatas.value.push({
-        imgSrcUrl:
-          "https://www.gravatar.com/avatar/2acfb745ecf9d4dccb3364752d17f65f?s=260&d=mp",
-        cardName: analysisData.newAnalysisName,
-        sportCategory: analysisData.optionName,
-        cardSummary: [
-          {
-            color: "red",
-            bgIntensity: 400,
-            textIntensity: 900,
-            itemHeader: "Elbow",
-            itemText: "Item Text 1"
-          },
-          {
-            color: "green",
-            bgIntensity: 400,
-            textIntensity: 900,
-            itemHeader: "Stance",
-            itemText: "Item Text 2"
-          },
-          {
-            color: "yellow",
-            bgIntensity: 400,
-            textIntensity: 900,
-            itemHeader: "Stance",
-            itemText: "Item Text 2"
-          }
-        ],
-        cardDetailLink: "https://www.digitalocean.com/"
+    function createAnalysis(analysis: Analysis) {
+      fetch(`${import.meta.env.VITE_API_ROOT}/analyses/`, {
+        method: "POST",
+        headers: {
+          Authorization: "Token " + accessToken.value,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(analysis)
       });
     }
 
     return {
       isAnalysisModalToggled,
-      cardDatas,
+      analyses,
       toggleAnalysisModal,
       createAnalysis
     };

@@ -54,7 +54,7 @@
         </button>
         <button
           class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white"
-          @click="emitCreateAnalysisEvent"
+          @click="createAnalysis"
         >
           Create
         </button>
@@ -63,8 +63,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, ref } from "vue";
+import { user, accessToken } from "../composables/use-auth";
 import BaseDropdown from "./UI/BaseDropdown.vue";
 import RadioButton from "./UI/RadioButton.vue";
 
@@ -99,15 +100,24 @@ export default defineComponent({
       ctx.emit("close-modal");
     }
 
-    function emitCreateAnalysisEvent() {
+    function createAnalysis() {
       const { optionName, ...rest } = radioButtons.value.find((e) => {
         return e.isSelected;
       });
 
-      ctx.emit("create-analysis", {
-        newAnalysisName: newAnalysisName.value,
-        optionName: optionName
-      });
+      console.log(optionName);
+
+      // fetch(`${import.meta.env.VITE_API_ROOT}/analyses/`, {
+      //   method: "POST",
+      //   headers: {
+      //     Authorization: "Token " + accessToken.value,
+      //     "Content-Type": "application/json"
+      //   },
+      //   body: JSON.stringify({
+      //     owner: user.id,
+      //     category:
+      //   })
+      // });
 
       emitCloseModalEvent();
     }
@@ -116,8 +126,7 @@ export default defineComponent({
       newAnalysisName,
       radioButtons,
       updateRadioButtons,
-      emitCloseModalEvent,
-      emitCreateAnalysisEvent
+      emitCloseModalEvent
     };
   }
 });
