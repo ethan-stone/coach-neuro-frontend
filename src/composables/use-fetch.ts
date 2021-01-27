@@ -7,7 +7,7 @@ export default function useFetch(url: string, options: any) {
     fetching: false
   });
 
-  async function fetchFunc() {
+  async function fetchData() {
     state.fetching = true;
     try {
       const res = await fetch(url, options);
@@ -20,5 +20,5 @@ export default function useFetch(url: string, options: any) {
     }
   }
 
-  return { ...toRefs(state), fetchFunc };
+  return { ...toRefs(state), fetchData };
 }
