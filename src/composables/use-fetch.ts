@@ -1,10 +1,11 @@
 import { toRefs, reactive } from "vue";
+import { accessToken, refreshAccessToken } from "./use-auth";
 import FetchOptions from "../interfaces/fetchOptions";
-import { refreshAccessToken } from "./use-auth";
+import Analysis from "../interfaces/analysis";
 
 export default function useFetch(url: string, options: FetchOptions) {
   const state = reactive({
-    response: [],
+    response: [] as Analysis[],
     error: null,
     fetching: false,
     isSuccess: false
@@ -12,7 +13,14 @@ export default function useFetch(url: string, options: FetchOptions) {
 
   async function tryFetch() {
     var isSuccess = false;
-    await fetch(url, options)
+
+    await fetch(url, {
+      method: options.method,
+      headers: {
+        Authorization: "Token " + accessToken.value
+      },
+      body: options.body
+    })
       .then((response) => response.json())
       .then((data) => {
         isSuccess = true;
