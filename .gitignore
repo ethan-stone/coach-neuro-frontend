@@ -1,4 +1,5 @@
 node_modules
+mkcert_localhost
 .DS_Store
 dist
 dist-ssr
