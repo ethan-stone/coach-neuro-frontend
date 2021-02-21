@@ -46,7 +46,9 @@ export async function refreshAccessToken() {
   const access = await fetch(
     `${import.meta.env.VITE_API_ROOT}/refresh-access-token/`,
     {
-      method: "POST"
+      method: "POST",
+      mode: "cors",
+      credentials: "include"
     }
   )
     .then((response) => response.json())
