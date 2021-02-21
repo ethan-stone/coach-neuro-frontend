@@ -11,6 +11,8 @@ export async function getTokenPair(username: string, password: string) {
     `${import.meta.env.VITE_API_ROOT}/token-pair/`,
     {
       method: "POST",
+      mode: "cors",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json"
       },

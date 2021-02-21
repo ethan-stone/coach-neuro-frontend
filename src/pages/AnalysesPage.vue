@@ -19,7 +19,7 @@ import AnalysesPageSidebar from "../components/AnalysesPageSidebar.vue";
 import NewAnalysisModal from "../components/NewAnalysisModal.vue";
 import Analysis from "../interfaces/analysis";
 import { accessToken, refreshAccessToken } from "../composables/use-auth";
-import useFetch from "../composables/use-fetch";
+import { analyses, getUsersAnalyses } from "../composables/use-analyses";
 
 export default defineComponent({
   name: "Analyses",
@@ -31,22 +31,7 @@ export default defineComponent({
   async setup() {
     const isAnalysisModalToggled = ref(false);
 
-    const {
-      response: analyses,
-      error: getAnalysesError,
-      fetching: isGetAnalysesFetching,
-      isSuccess: isGetAnalysesSuccess,
-      fetchData: fetchAnalyeses
-    } = useFetch(`${import.meta.env.VITE_API_ROOT}/users/analyses/`, {
-      method: "GET",
-      body: ""
-    });
-
-    await fetchAnalyeses();
-
-    if (!isGetAnalysesSuccess) {
-      console.log(getAnalysesError);
-    }
+    getUsersAnalyses();
 
     function toggleAnalysisModal() {
       isAnalysisModalToggled.value = true;
@@ -67,9 +52,7 @@ export default defineComponent({
       isAnalysisModalToggled,
       toggleAnalysisModal,
       createAnalysis,
-      analyses,
-      isGetAnalysesFetching,
-      isGetAnalysesSuccess
+      analyses
     };
   }
 });

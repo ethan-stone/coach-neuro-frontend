@@ -1,11 +1,9 @@
 import { toRefs, reactive } from "vue";
 import { accessToken, refreshAccessToken } from "./use-auth";
-import FetchOptions from "../interfaces/fetchOptions";
-import Analysis from "../interfaces/analysis";
 
-export default function useFetch(url: string, options: FetchOptions) {
+export default function useFetch(url: string, options: any) {
   const state = reactive({
-    response: [] as Analysis[],
+    response: null,
     error: null,
     fetching: false,
     isSuccess: false
@@ -19,6 +17,7 @@ export default function useFetch(url: string, options: FetchOptions) {
       headers: {
         Authorization: "Token " + accessToken.value
       },
+      credentials: "include",
       body: options.body
     })
       .then((response) => response.json())
@@ -29,6 +28,7 @@ export default function useFetch(url: string, options: FetchOptions) {
       .catch((error) => {
         state.error = error;
       });
+
     return isSuccess;
   }
 
@@ -39,9 +39,12 @@ export default function useFetch(url: string, options: FetchOptions) {
     const isInitialSuccess = await tryFetch();
     state.isSuccess = isInitialSuccess;
 
+    console.log("First try is: " + isInitialSuccess);
+
     if (!isInitialSuccess) {
       // if not successful refresh the token
       const isRefreshSuccess = await refreshAccessToken();
+      console.log("Try refresh token is: " + isRefreshSuccess);
 
       // if refresh is not successful force logout to login again
       if (!isRefreshSuccess) {
@@ -51,6 +54,8 @@ export default function useFetch(url: string, options: FetchOptions) {
       // retry request
       const isRetrySuccess = await tryFetch();
       state.isSuccess = isRetrySuccess;
+
+      console.log("Second try is: " + isRetrySuccess);
     }
     // final result of state.isSuccess will be handled by caller of fetchData
     // caller will display appropiate error message

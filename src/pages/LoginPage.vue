@@ -47,11 +47,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
-import {
-  user,
-  getTokenPair,
-  refreshAccessToken
-} from "../composables/use-auth";
+import { getTokenPair, refreshAccessToken } from "../composables/use-auth";
 
 export default defineComponent({
   name: "LoginPage",
@@ -75,8 +71,7 @@ export default defineComponent({
     return {
       username,
       password,
-      login,
-      user
+      login
     };
   }
 });
