@@ -1,6 +1,6 @@
 import { ref } from "vue";
-import useFetch from "./use-fetch";
 import { user, accessToken } from "./use-auth";
+import useFetch from "./use-fetch";
 
 export const analyses = ref([]);
 
