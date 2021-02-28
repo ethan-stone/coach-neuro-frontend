@@ -40,7 +40,7 @@ export const authModule = {
     }
   },
   actions: {
-    async getTokenPair({ commit, state }, { username, password }) {
+    async getTokenPair({ commit }, { username, password }) {
       var isSuccess = false;
 
       const { accessToken, userInfo } = await fetch(
@@ -88,17 +88,20 @@ export const authModule = {
           credentials: "include"
         }
       )
-        .then((response) => response.json())
-        .then((data) => {
-          isSuccess = true;
-          return data;
+        .then((response) => {
+          if (response.ok) {
+            isSuccess = true;
+          }
+          return response.json();
         })
+        .then((data) => data)
         .catch((error) => {
           console.error(error);
         });
+
       commit("setAuthState", {
         isAuthenticated: isSuccess,
-        accessToken: state.accessToken,
+        accessToken: accessToken,
         user: state.user
       });
     }
