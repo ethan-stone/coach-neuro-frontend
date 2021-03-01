@@ -18,8 +18,7 @@ import CardTable from "../components/CardTable.vue";
 import AnalysesPageSidebar from "../components/AnalysesPageSidebar.vue";
 import NewAnalysisModal from "../components/NewAnalysisModal.vue";
 import Analysis from "../interfaces/analysis";
-import { accessToken, refreshAccessToken } from "../composables/use-auth";
-import { analyses, getUsersAnalyses } from "../composables/use-analyses";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "Analyses",
@@ -29,30 +28,31 @@ export default defineComponent({
     NewAnalysisModal
   },
   async setup() {
-    const isAnalysisModalToggled = ref(false);
+    const store = useStore();
 
-    getUsersAnalyses();
+    const isAnalysisModalToggled = ref(false);
 
     function toggleAnalysisModal() {
       isAnalysisModalToggled.value = true;
     }
 
-    function createAnalysis(analysis: Analysis) {
-      fetch(`${import.meta.env.VITE_API_ROOT}/analyses/`, {
-        method: "POST",
-        headers: {
-          Authorization: "Token " + accessToken.value,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(analysis)
-      });
-    }
+    store.dispatch("fetchAnalyses");
+
+    // function createAnalysis(analysis: Analysis) {
+    //   fetch(`${import.meta.env.VITE_API_ROOT}/analyses/`, {
+    //     method: "POST",
+    //     headers: {
+    //       Authorization: "Token " + accessToken.value,
+    //       "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify(analysis)
+    //   });
+    // }
 
     return {
       isAnalysisModalToggled,
       toggleAnalysisModal,
-      createAnalysis,
-      analyses
+      analyses: store.getters.analyses
     };
   }
 });

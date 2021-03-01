@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import { createStore } from "vuex";
 import { authModule } from "./modules/auth";
+import { analysesModule } from "./modules/analyses";
 import { createRouter, createWebHistory } from "vue-router";
 import App from "./App.vue";
 import VueClickAway from "vue3-click-away";
@@ -11,7 +12,8 @@ import "./index.css";
 
 const store = createStore({
   modules: {
-    auth: authModule
+    auth: authModule,
+    analyses: analysesModule
   }
 });
 

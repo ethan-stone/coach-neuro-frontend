@@ -47,25 +47,26 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
-import { getTokenPair, refreshAccessToken } from "../composables/use-auth";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "LoginPage",
   setup() {
     const router = useRouter();
+    const store = useStore();
 
     const username = ref("");
     const password = ref("");
 
     async function login() {
-      const success = await getTokenPair(username.value, password.value);
-      if (success) {
+      await store.dispatch("getTokenPair", {
+        username: username.value,
+        password: password.value
+      });
+
+      if (store.getters.isAuthenticated) {
         router.push("/analyses");
       }
-    }
-
-    async function refresh() {
-      const success = await refreshAccessToken();
     }
 
     return {

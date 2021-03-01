@@ -9,7 +9,11 @@ const analysesState: AnalysesState = {
   analyses: []
 };
 
-async function tryFetchAnalysis(payload: { accessToken: string; user: User }) {
+async function tryFetchAnalysis(payload: {
+  accessToken: string;
+  csrfToken: string;
+  user: User;
+}) {
   var isSuccess = false;
 
   const analyses = await fetch(
@@ -20,11 +24,13 @@ async function tryFetchAnalysis(payload: { accessToken: string; user: User }) {
       credentials: "include",
       headers: {
         Authorization: "Token " + payload.accessToken,
+        "X-CSRFToken": payload.csrfToken,
+        Referer: `${import.meta.env.VITE_HOST_ROOT}`,
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        user_id: payload.user.id
-      })
+      }
+      // body: JSON.stringify({
+      //   user_id: payload.user.id
+      // })
     }
   )
     .then((response) => {
@@ -49,17 +55,20 @@ export const analysesModule = {
     }
   },
   mutations: {
-    setAnalyses(state: AnalysesState, payload: { analyses: Analysis[] }) {}
+    setAnalyses(state: AnalysesState, payload: { analyses: Analysis[] }) {
+      state.analyses = payload.analyses;
+    }
   },
   actions: {
-    async fetchAnalyses(
-      { dispatch, commit, getters },
-      payload: { accessToken: string; user: User }
-    ) {
+    async fetchAnalyses({ dispatch, commit, getters }) {
       const {
         isSuccess: isInitialSuccess,
         analyses: initialAnalyses
-      } = await tryFetchAnalysis(payload);
+      } = await tryFetchAnalysis({
+        accessToken: getters.accessToken,
+        csrfToken: getters.csrfToken,
+        user: getters.currentUser
+      });
 
       if (isInitialSuccess) {
         commit("setAnalyses", { analyses: initialAnalyses });
@@ -78,7 +87,11 @@ export const analysesModule = {
       const {
         isSuccess: isRetrySuccess,
         analyses: retryAnalyses
-      } = await tryFetchAnalysis(payload);
+      } = await tryFetchAnalysis({
+        accessToken: getters.accessToken,
+        csrfToken: getters.csrfToken,
+        user: getters.currentUser
+      });
 
       if (isRetrySuccess) {
         commit("setAnalyses", { analyses: retryAnalyses });

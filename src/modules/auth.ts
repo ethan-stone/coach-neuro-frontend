@@ -3,14 +3,32 @@ import User from "../interfaces/user";
 interface AuthState {
   isAuthenticated: boolean;
   accessToken: string;
+  csrfToken: string;
   user: User;
 }
 
 const authState: AuthState = {
   isAuthenticated: false,
   accessToken: null,
+  csrfToken: null,
   user: null
 };
+
+function getCookie(cname: string) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(";");
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == " ") {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
 
 export const authModule = {
   state: authState,
@@ -23,6 +41,9 @@ export const authModule = {
     },
     currentUser(state: AuthState): User {
       return state.user;
+    },
+    csrfToken(state: AuthState): string {
+      return state.csrfToken;
     }
   },
   mutations: {
@@ -31,16 +52,21 @@ export const authModule = {
       payload: {
         isAuthenticated: boolean;
         accessToken: string;
+        csrfToken: string;
         user: User;
       }
     ) {
       state.isAuthenticated = payload.isAuthenticated;
       state.accessToken = payload.accessToken;
+      state.csrfToken = payload.csrfToken;
       state.user = payload.user;
     }
   },
   actions: {
     async getTokenPair({ commit }, { username, password }) {
+      console.log(username);
+      console.log(password);
+
       var isSuccess = false;
 
       const { accessToken, userInfo } = await fetch(
@@ -74,10 +100,11 @@ export const authModule = {
       commit("setAuthState", {
         isAuthenticated: isSuccess,
         accessToken: accessToken,
+        csrfToken: getCookie("csrftoken"),
         user: user
       });
     },
-    async refreshAccessToken({ commit, state }) {
+    async refreshAccessToken({ commit, getters, state }) {
       var isSuccess = false;
 
       const accessToken = await fetch(
@@ -85,7 +112,11 @@ export const authModule = {
         {
           method: "POST",
           mode: "cors",
-          credentials: "include"
+          credentials: "include",
+          headers: {
+            "X-CSRFToken": getters.csrfToken,
+            Referer: `${import.meta.env.VITE_HOST_ROOT}`
+          }
         }
       )
         .then((response) => {
@@ -102,6 +133,7 @@ export const authModule = {
       commit("setAuthState", {
         isAuthenticated: isSuccess,
         accessToken: accessToken,
+        csrfToken: getCookie("csrftoken"),
         user: state.user
       });
     }
