@@ -1,4 +1,5 @@
 import vue from "@vitejs/plugin-vue";
+import * as path from "path";
 const fs = require("fs");
 
 /**

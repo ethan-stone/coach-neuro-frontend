@@ -81,6 +81,7 @@
 
 <script>
 import { defineComponent, ref } from "vue";
+import { auth, db } from "../firebase";
 
 export default defineComponent({
   name: "SignUpPage",
@@ -94,22 +95,24 @@ export default defineComponent({
       if (password.value !== passwordConfirm.value) {
         console.log("Invalid password");
       } else {
-        fetch(`${import.meta.env.VITE_API_ROOT}/create-user/`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            username: username.value,
-            email: email.value,
-            password: password.value
-          })
-        })
-          .then((response) => {
-            console.log(response);
+        auth
+          .createUserWithEmailAndPassword(email.value, password.value)
+          .then((userCredentials) => {
+            var user = userCredentials.user;
+            db.collection("users")
+              .doc(user.uid)
+              .set({
+                username: username.value
+              })
+              .then(() => {
+                console.log("User successfully created");
+              })
+              .catch((error) => {
+                console.error(error);
+              });
           })
           .catch((error) => {
-            console.log(error);
+            console.error(error);
           });
       }
     }

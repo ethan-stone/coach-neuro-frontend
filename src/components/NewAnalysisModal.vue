@@ -65,7 +65,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { user, accessToken } from "../composables/use-auth";
+import { auth, db } from "../firebase";
 import BaseDropdown from "./UI/BaseDropdown.vue";
 import RadioButton from "./UI/RadioButton.vue";
 
@@ -105,19 +105,19 @@ export default defineComponent({
         return e.isSelected;
       });
 
-      console.log(optionName);
-
-      // fetch(`${import.meta.env.VITE_API_ROOT}/analyses/`, {
-      //   method: "POST",
-      //   headers: {
-      //     Authorization: "Token " + accessToken.value,
-      //     "Content-Type": "application/json"
-      //   },
-      //   body: JSON.stringify({
-      //     owner: user.id,
-      //     category:
-      //   })
-      // });
+      db.collection("users")
+        .doc(auth.currentUser.uid)
+        .collection("analyses")
+        .add({
+          name: newAnalysisName.value,
+          category: optionName
+        })
+        .then((docRef) => {
+          console.log("New analysis created written with ID: ", docRef.id);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
 
       emitCloseModalEvent();
     }
@@ -126,7 +126,8 @@ export default defineComponent({
       newAnalysisName,
       radioButtons,
       updateRadioButtons,
-      emitCloseModalEvent
+      emitCloseModalEvent,
+      createAnalysis
     };
   }
 });

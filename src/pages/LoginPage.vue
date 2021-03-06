@@ -3,17 +3,17 @@
     <div class="w-11/12 p-12 bg-white sm:w-8/12 md:w-1/2 lg:w-5/12">
       <form class="mt-48">
         <label
-          for="username"
+          for="email"
           class="block mt-2 text-xs font-semibold text-gray-600 uppercase"
           >Username</label
         >
         <input
-          v-model="username"
-          id="username"
-          type="username"
-          name="username"
-          placeholder="username"
-          autocomplete="username"
+          v-model="email"
+          id="email"
+          type="email"
+          name="email"
+          placeholder="email"
+          autocomplete="email"
           class="block w-full p-3 mt-2 rounded text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
           required
         />
@@ -47,6 +47,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
+import { auth } from "../firebase";
 import { useStore } from "vuex";
 
 export default defineComponent({
@@ -55,22 +56,23 @@ export default defineComponent({
     const router = useRouter();
     const store = useStore();
 
-    const username = ref("");
+    const email = ref("");
     const password = ref("");
 
     async function login() {
-      await store.dispatch("getTokenPair", {
-        username: username.value,
-        password: password.value
-      });
-
-      if (store.getters.isAuthenticated) {
-        router.push("/analyses");
-      }
+      auth
+        .signInWithEmailAndPassword(email.value, password.value)
+        .then((_) => {
+          console.log("User successfully signed in ");
+          router.push("/analyses");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
 
     return {
-      username,
+      email,
       password,
       login
     };

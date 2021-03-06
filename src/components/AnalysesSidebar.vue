@@ -43,7 +43,7 @@ import { defineComponent } from "vue";
 import BaseDropdown from "./UI/BaseDropdown.vue";
 
 export default defineComponent({
-  name: "ReportsPageSidebar",
+  name: "AnalysesSidebar",
   emits: ["open-modal"],
   components: {
     BaseDropdown
