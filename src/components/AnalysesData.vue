@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="h-screen w-full flex overflow-hidden">
     <analyses-sidebar @open-modal="toggleAnalysisModal" />
     <new-analysis-modal
       v-if="isAnalysisModalToggled"
