@@ -48,13 +48,11 @@
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
 import { auth } from "../firebase";
-import { useStore } from "vuex";
 
 export default defineComponent({
   name: "LoginPage",
   setup() {
     const router = useRouter();
-    const store = useStore();
 
     const email = ref("");
     const password = ref("");

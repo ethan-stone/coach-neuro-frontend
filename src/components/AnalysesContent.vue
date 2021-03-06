@@ -25,24 +25,26 @@ export default defineComponent({
   },
   setup() {
     const isAnalysisModalToggled = ref(false);
+    const analyses = ref([]);
 
     function toggleAnalysisModal() {
       isAnalysisModalToggled.value = true;
     }
 
-    // db.collection("users")
-    //   .doc(auth.currentUser.uid)
-    //   .collection("analyses")
-    //   .get()
-    //   .then((querySnapshot) => {
-    //     querySnapshot.forEach((doc) => {
-    //       console.log(doc.id, "=>", doc.data());
-    //     });
-    //   });
+    db.collection("users")
+      .doc(auth.currentUser.uid)
+      .collection("analyses")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          analyses.value.push(doc.data());
+        });
+      });
 
     return {
       isAnalysisModalToggled,
-      toggleAnalysisModal
+      toggleAnalysisModal,
+      analyses
     };
   }
 });

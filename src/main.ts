@@ -1,21 +1,12 @@
 import { createApp } from "vue";
-import { createStore } from "vuex";
-import { authModule } from "./modules/auth";
-import { analysesModule } from "./modules/analyses";
 import { createRouter, createWebHistory } from "vue-router";
 import App from "./App.vue";
 import VueClickAway from "vue3-click-away";
 import AnalysesPage from "./pages/AnalysesPage.vue";
+import AnalysisPage from "./pages/AnalysisPage.vue";
 import SignUpPage from "./pages/SignUpPage.vue";
 import LoginPage from "./pages/LoginPage.vue";
 import "./index.css";
-
-const store = createStore({
-  modules: {
-    auth: authModule,
-    analyses: analysesModule
-  }
-});
 
 const router = createRouter({
   history: createWebHistory(),
@@ -23,6 +14,10 @@ const router = createRouter({
     {
       path: "/analyses",
       component: AnalysesPage
+    },
+    {
+      path: "/analysis",
+      component: AnalysisPage
     },
     {
       path: "/signup",
@@ -37,7 +32,6 @@ const router = createRouter({
 
 const app = createApp(App);
 
-app.use(store);
 app.use(router);
 app.use(VueClickAway);
 
