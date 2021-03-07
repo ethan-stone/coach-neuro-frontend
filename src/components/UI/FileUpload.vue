@@ -18,12 +18,13 @@
                 >
               </div>
             </div>
-            <input type="file" class="h-full w-full opacity-0" name="" />
+            <input type="file" class="h-full w-full opacity-0" ref="file" />
           </div>
         </div>
         <div class="mt-3 text-center pb-3">
           <button
             class="w-full h-12 text-lg bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded text-white"
+            @click="uploadFile"
           >
             Create
           </button>
@@ -34,8 +35,31 @@
 </template>
 
 <script>
+import { ref } from "vue";
+import { auth, storage } from "../../firebase";
+
 export default {
-  name: "FileUpload"
+  name: "FileUpload",
+  setup() {
+    const file = ref(null);
+
+    function uploadFile() {
+      console.log(file.value.files);
+      var storageRef = storage.ref();
+      var videoRef = storageRef.child(
+        auth.currentUser.uid + "/" + file.value.files[0].name
+      );
+      videoRef.put(file.value.files[0].name).then((snapshot) => {
+        console.log(snapshot);
+        console.log("File successfully uploaded");
+      });
+    }
+
+    return {
+      file,
+      uploadFile
+    };
+  }
 };
 </script>
 
