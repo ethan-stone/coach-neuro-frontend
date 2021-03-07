@@ -6,13 +6,13 @@
         :key="index"
         class="my-2 p-2 w-full md:w-1/2 lg:w-1/3 xl:w-1/4"
       >
-        <base-card
+        <analysis-card
           :imgSrcUrl="analysis.imgSrcUrl"
           :cardName="analysis.cardName"
           :sportCategory="analysis.sportCategory"
           :cardSummary="analysis.cardSummary"
-          :cardDetailLink="analysis.cardDetailLink"
-        ></base-card>
+          :cardDetailLink="analysis.id"
+        ></analysis-card>
       </div>
     </div>
   </div>
@@ -20,12 +20,12 @@
 
 <script>
 import { defineComponent } from "vue";
-import BaseCard from "./UI/BaseCard.vue";
+import AnalysisCard from "./UI/AnalysisCard.vue";
 
 export default defineComponent({
   name: "AnalysesGrid",
   components: {
-    BaseCard
+    AnalysisCard
   },
   props: {
     analyses: Array

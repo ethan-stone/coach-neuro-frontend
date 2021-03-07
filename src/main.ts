@@ -16,7 +16,7 @@ const router = createRouter({
       component: AnalysesPage
     },
     {
-      path: "/analysis",
+      path: "/analysis/:id",
       component: AnalysisPage
     },
     {

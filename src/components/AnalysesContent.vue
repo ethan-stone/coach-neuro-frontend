@@ -37,7 +37,7 @@ export default defineComponent({
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          analyses.value.push(doc.data());
+          analyses.value.push({ ...doc.data(), id: doc.id });
         });
       });
 

@@ -51,7 +51,6 @@ export default {
       );
       videoRef.put(file.value.files[0].name).then((snapshot) => {
         console.log(snapshot);
-        console.log("File successfully uploaded");
       });
     }
 

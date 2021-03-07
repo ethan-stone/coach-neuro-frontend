@@ -23,11 +23,16 @@
       </ul>
     </div>
     <div class="inset-x-0 bottom-0">
-      <a
+      <!-- <a
         :href="cardDetailLink"
         class="block border-2 border-black bg-white py-2 px-2 text-black text-center rounded uppercase font-light my-2 mx-2 hover:bg-black hover:text-white hover:border-black duration-300 ease-in-out"
         >View Details</a
-      >
+      > -->
+      <button>
+        <router-link :to="'/analysis/' + cardDetailLink"
+          >iwdqwdjqowidj</router-link
+        >
+      </button>
     </div>
   </div>
 </template>
@@ -36,7 +41,7 @@
 import { defineComponent } from "vue";
 import ColoredListItem from "./ColoredListItem.vue";
 export default defineComponent({
-  name: "BaseCard",
+  name: "AnalysisCard",
   components: {
     ColoredListItem
   },
