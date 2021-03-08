@@ -45,7 +45,10 @@
           </label>
         </div>
       </div>
-      <div class="flex justify-end items-center w-100 border-t p-3">
+      <div>
+        <file-upload></file-upload>
+      </div>
+      <div class="flex justify-end items-center w-100 border-t p-3 mt-2">
         <button
           class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white mr-1 close-modal"
           @click="emitCloseModalEvent"
@@ -68,10 +71,11 @@ import { defineComponent, ref } from "vue";
 import { auth, db } from "../firebase";
 import BaseDropdown from "./UI/BaseDropdown.vue";
 import RadioButton from "./UI/RadioButton.vue";
+import FileUpload from "./UI/FileUpload.vue";
 
 export default defineComponent({
   name: "NewAnalysisModal",
-  components: { BaseDropdown, RadioButton },
+  components: { BaseDropdown, RadioButton, FileUpload },
   emits: ["close-modal", "create-analysis"],
   setup(_, ctx) {
     const newAnalysisName = ref("");

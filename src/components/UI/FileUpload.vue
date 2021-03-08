@@ -1,36 +1,21 @@
 <template>
-  <div class="flex flex-col bg-white rounded md:justify-center lg:flex-row">
-    <div class="flex flex-col justify-between p-5 sm:p-10 md:p-44 lg:w-2/3">
-      <div class="p-3">
-        <div class="mb-2">
-          <div
-            class="relative h-80 rounded-lg border-dashed border-2 border-gray-200 bg-white flex justify-center items-center hover:cursor-pointer"
-          >
-            <div class="absolute">
-              <div class="flex flex-col items-center">
-                <i class="fa fa-cloud-upload fa-3x text-gray-200"></i>
-                <span class="block text-gray-400 font-normal"
-                  >Attach you files here</span
-                >
-                <span class="block text-gray-400 font-normal">or</span>
-                <span class="block text-blue-400 font-normal"
-                  >Browse files</span
-                >
-              </div>
-            </div>
-            <input type="file" class="h-full w-full opacity-0" ref="file" />
-          </div>
-        </div>
-        <div class="mt-3 text-center pb-3">
-          <button
-            class="w-full h-12 text-lg bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded text-white"
-            @click="uploadFile"
-          >
-            Create
-          </button>
-        </div>
-      </div>
-    </div>
+  <div class="flex w-full items-center justify-center bg-grey-lighter">
+    <label
+      class="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white"
+    >
+      <svg
+        class="w-8 h-8"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+      >
+        <path
+          d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z"
+        />
+      </svg>
+      <span class="mt-2 text-base leading-normal">Select a file</span>
+      <input type="file" class="hidden" />
+    </label>
   </div>
 </template>
 
