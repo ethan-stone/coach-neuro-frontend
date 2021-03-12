@@ -2,61 +2,68 @@
   <div
     class="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50"
   >
-    <!-- modal -->
     <div
-      class="bg-white rounded shadow-lg w-1/4"
+      class="p-4 bg-white rounded-lg shadow-lg relative w-96 md:w-2/3 lg:w-1/2"
       v-click-away="emitCloseModalEvent"
     >
-      <!-- modal header -->
-      <div class="border-b px-4 py-2 flex justify-between items-center">
-        <h3 class="font-semibold text-lg">Modal Title</h3>
-        <button class="text-black close-modal" @click="emitCloseModalEvent">
-          &cross;
-        </button>
-      </div>
-      <!-- modal body -->
-      <div class="px-6 py-4">
-        <label class="block text-xs font-semibold text-gray-600 uppercase"
-          >Name</label
+      <p class="border-b pb-4 text-center text-gray-700 font-bold text-2xl">
+        New Analysis
+      </p>
+      <label class="block text-gray-600 text-sm font-semibold mt-2" for="title"
+        >Analysis Title</label
+      >
+      <input
+        v-model="newAnalysisName"
+        class="bg-gray-100 appearance-none border focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight"
+        id="title"
+        type="text"
+        name="analysis-name"
+        autocomplete="off"
+        placeholder="Analysis Title"
+      />
+      <label class="block text-gray-600 text-sm font-semibold mt-4" for="title"
+        >Select Analysis Type</label
+      >
+      <div class="flex flex-wrap justify-center mt-2">
+        <div
+          v-for="(radioButton, index) in radioButtons"
+          :key="index"
+          class="inline-flex items-center mr-6"
         >
-        <input
-          v-model="newAnalysisName"
-          id="analysis-name"
-          type="text"
-          name="analysis-name"
-          placeholder="Analysis Name"
-          autocomplete="off"
-          class="block w-full px-1 mt-2 text-gray-800 appearance-none border-b-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200"
-        />
-        <label class="block text-xs font-semibold text-gray-600 uppercase mt-6"
-          >Category</label
-        >
-        <div class="mt-2">
-          <label
-            v-for="(radioButton, index) in radioButtons"
-            :key="index"
-            class="inline-flex items-center mr-6"
+          <radio-button
+            :optionName="radioButton.optionName"
+            :isSelected="radioButton.isSelected"
+            @update-radio-buttons="updateRadioButtons"
           >
-            <radio-button
-              :optionName="radioButton.optionName"
-              :isSelected="radioButton.isSelected"
-              @update-radio-buttons="updateRadioButtons"
-            ></radio-button>
-          </label>
+          </radio-button>
         </div>
       </div>
-      <div>
-        <file-upload></file-upload>
-      </div>
-      <div class="flex justify-end items-center w-100 border-t p-3 mt-2">
-        <button
-          class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white mr-1 close-modal"
-          @click="emitCloseModalEvent"
+      <label class="block text-gray-600 text-sm font-semibold mt-4" for="title"
+        >Select File</label
+      >
+      <div class="w-full mt-2">
+        <div
+          class="relative h-40 rounded-lg border-dashed border-2 border-gray-200 bg-white flex justify-center items-center hover:cursor-pointer"
         >
-          Cancel
-        </button>
+          <div class="absolute">
+            <div class="flex flex-col items-center">
+              <i class="fa fa-cloud-upload fa-3x text-gray-200"></i>
+              <span class="block text-gray-400 font-normal">Drag</span>
+              <span class="block text-gray-400 font-normal">or</span>
+              <span class="block font-bold text-black">Browse Files</span>
+            </div>
+          </div>
+          <input
+            class="h-full w-full opacity-0"
+            ref="file"
+            type="file"
+            name=""
+          />
+        </div>
+      </div>
+      <div class="mt-3 text-center pb-3">
         <button
-          class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white"
+          class="w-full h-12 text-lg rounded bg-gradient-to-r from-gray-300 via-gray-700 to-gray-300 text-white"
           @click="createAnalysis"
         >
           Create
@@ -68,17 +75,18 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { auth, db } from "../firebase";
+import { auth, db, storage } from "../firebase";
 import BaseDropdown from "./UI/BaseDropdown.vue";
 import RadioButton from "./UI/RadioButton.vue";
-import FileUpload from "./UI/FileUpload.vue";
 
 export default defineComponent({
   name: "NewAnalysisModal",
-  components: { BaseDropdown, RadioButton, FileUpload },
+  components: { BaseDropdown, RadioButton },
   emits: ["close-modal", "create-analysis"],
   setup(_, ctx) {
     const newAnalysisName = ref("");
+    const file = ref(null);
+
     const radioButtons = ref([
       {
         optionName: "basketball",
@@ -109,6 +117,14 @@ export default defineComponent({
         return e.isSelected;
       });
 
+      var storageRef = storage.ref();
+      var videoRef = storageRef.child(
+        auth.currentUser.uid + "/" + file.value.files[0].name
+      );
+      videoRef.put(file.value.files[0].name).then((snapshot) => {
+        console.log(snapshot);
+      });
+
       db.collection("users")
         .doc(auth.currentUser.uid)
         .collection("analyses")
@@ -131,7 +147,8 @@ export default defineComponent({
       radioButtons,
       updateRadioButtons,
       emitCloseModalEvent,
-      createAnalysis
+      createAnalysis,
+      file
     };
   }
 });
