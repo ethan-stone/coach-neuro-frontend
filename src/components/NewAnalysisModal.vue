@@ -76,6 +76,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { auth, db, storage } from "../firebase";
+import { nanoid } from "nanoid";
 import BaseDropdown from "./UI/BaseDropdown.vue";
 import RadioButton from "./UI/RadioButton.vue";
 
@@ -118,22 +119,31 @@ export default defineComponent({
       });
 
       var storageRef = storage.ref();
-      var videoRef = storageRef.child(
-        auth.currentUser.uid + "/" + file.value.files[0].name
-      );
-      videoRef.put(file.value.files[0].name).then((snapshot) => {
-        console.log(snapshot);
-      });
 
-      db.collection("users")
-        .doc(auth.currentUser.uid)
-        .collection("analyses")
-        .add({
-          name: newAnalysisName.value,
-          category: optionName
-        })
-        .then((docRef) => {
-          console.log("New analysis created written with ID: ", docRef.id);
+      var fileName = file.value.files[0].name;
+      var videoId = nanoid();
+      var videoRef = storageRef.child(
+        auth.currentUser.uid + "/" + videoId + "." + fileName.split(".").pop()
+      );
+
+      videoRef
+        .put(file.value.files[0])
+        .then((snapshot) => {
+          var videoPath = snapshot.metadata.fullPath;
+          db.collection("users")
+            .doc(auth.currentUser.uid)
+            .collection("analyses")
+            .add({
+              name: newAnalysisName.value,
+              category: optionName,
+              videoPath: videoPath
+            })
+            .then((docRef) => {
+              console.log("New analysis created with ID: ", docRef.id);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
         })
         .catch((error) => {
           console.error(error);
