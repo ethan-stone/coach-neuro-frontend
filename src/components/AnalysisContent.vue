@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive, ref, watch } from "vue";
+import { defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 import { auth, db, storage } from "../firebase";
 
