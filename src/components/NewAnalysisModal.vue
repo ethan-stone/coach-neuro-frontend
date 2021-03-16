@@ -77,6 +77,7 @@
 import { defineComponent, ref } from "vue";
 import { auth, db, storage } from "../firebase";
 import { nanoid } from "nanoid";
+import { useRouter } from "vue-router";
 import BaseDropdown from "./UI/BaseDropdown.vue";
 import RadioButton from "./UI/RadioButton.vue";
 
@@ -87,6 +88,7 @@ export default defineComponent({
   setup(_, ctx) {
     const newAnalysisName = ref("");
     const file = ref(null);
+    const router = useRouter();
 
     const radioButtons = ref([
       {
@@ -113,7 +115,7 @@ export default defineComponent({
       ctx.emit("close-modal");
     }
 
-    function createAnalysis() {
+    async function createAnalysis() {
       const { optionName, ...rest } = radioButtons.value.find((e) => {
         return e.isSelected;
       });
@@ -140,6 +142,8 @@ export default defineComponent({
             })
             .then((docRef) => {
               console.log("New analysis created with ID: ", docRef.id);
+              emitCloseModalEvent();
+              router.push("/analysis/" + docRef.id);
             })
             .catch((error) => {
               console.error(error);
@@ -148,8 +152,6 @@ export default defineComponent({
         .catch((error) => {
           console.error(error);
         });
-
-      emitCloseModalEvent();
     }
 
     return {

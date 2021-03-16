@@ -20,7 +20,6 @@ export default defineComponent({
   setup(props, ctx) {
     function emitUpdateSelectedRadioButtonEvent() {
       if (!props.isSelected) {
-        console.log(props.optionName);
         ctx.emit("update-radio-buttons", props.optionName);
       }
     }
