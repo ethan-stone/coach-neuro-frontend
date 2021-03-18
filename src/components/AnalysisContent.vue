@@ -1,7 +1,13 @@
 <template>
   <div class="h-screen w-full">
-    <video :src="downloadURL" ref="videoElementRef" crossorigin="anonymous" />
-    <button @click="analyzeVideo">Analyze Video</button>
+    <video
+      :src="downloadURL"
+      ref="videoElementRef"
+      crossorigin="anonymous"
+      autoplay
+      muted="true"
+    />
+    <button @click="estimateVideoPoses">Analyze Video</button>
   </div>
 </template>
 
@@ -12,20 +18,38 @@ import { auth, db, storage } from "../firebase";
 import * as tf from "@tensorflow/tfjs";
 import * as posenet from "@tensorflow-models/posenet";
 
+//https://www.twilio.com/blog/pose-detection-video-tensorflow-js
+
 export default defineComponent({
   name: "AnalysisContent",
   setup() {
+    const frameRate = 20;
+
     const route = useRoute();
 
     const analysisData = ref({});
     const downloadURL = ref();
     const videoElementRef = ref(null);
 
-    async function analyzeVideo() {
-      console.log(videoElementRef.value);
+    async function estimateVideoPoses() {
       const net = await posenet.load();
-      const pose = await net.estimateSinglePose(videoElementRef.value);
-      console.log(pose);
+
+      async function estimateFrame(net) {
+        const pose = await net.estimatePoses(videoElementRef.value, {
+          decodingMethod: "single-person"
+        });
+        console.log(pose);
+        return pose;
+      }
+
+      const intervalID = setInterval(() => {
+        try {
+          estimateFrame(net);
+        } catch (error) {
+          clearInterval(intervalID);
+          alert(error);
+        }
+      }, Math.round(1000 / frameRate));
     }
 
     db.collection("users")
@@ -49,7 +73,7 @@ export default defineComponent({
       analysisData,
       downloadURL,
       videoElementRef,
-      analyzeVideo
+      estimateVideoPoses
     };
   }
 });
