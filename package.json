@@ -6,6 +6,8 @@
     "build": "vite build"
   },
   "dependencies": {
+    "@tensorflow-models/posenet": "^2.2.2",
+    "@tensorflow/tfjs": "^3.3.0",
     "firebase": "^8.2.10",
     "nanoid": "^3.1.21",
     "vue": "^3.0.5",

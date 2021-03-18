@@ -12,6 +12,7 @@ import { defineComponent } from "vue";
 import User from "../components/User.vue";
 import AnalysisContent from "../components/AnalysisContent.vue";
 import LoginPage from "./LoginPage.vue";
+
 export default defineComponent({
   name: "AnalysisPage",
   components: { User, AnalysisContent, LoginPage }

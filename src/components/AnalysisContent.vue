@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen w-full">
-    <video :src="downloadURL"></video>
-    <img :src="downloadURL" />
+    <video :src="downloadURL" ref="videoElementRef" crossorigin="anonymous" />
+    <button @click="analyzeVideo">Analyze Video</button>
   </div>
 </template>
 
@@ -9,13 +9,24 @@
 import { defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 import { auth, db, storage } from "../firebase";
+import * as tf from "@tensorflow/tfjs";
+import * as posenet from "@tensorflow-models/posenet";
 
 export default defineComponent({
   name: "AnalysisContent",
   setup() {
     const route = useRoute();
+
     const analysisData = ref({});
     const downloadURL = ref();
+    const videoElementRef = ref(null);
+
+    async function analyzeVideo() {
+      console.log(videoElementRef.value);
+      const net = await posenet.load();
+      const pose = await net.estimateSinglePose(videoElementRef.value);
+      console.log(pose);
+    }
 
     db.collection("users")
       .doc(auth.currentUser.uid)
@@ -35,7 +46,10 @@ export default defineComponent({
       });
     // watch(() => route.params, async newAnalysisData => analysisData.value = );
     return {
-      downloadURL
+      analysisData,
+      downloadURL,
+      videoElementRef,
+      analyzeVideo
     };
   }
 });
