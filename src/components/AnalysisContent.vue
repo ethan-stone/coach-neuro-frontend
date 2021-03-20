@@ -4,6 +4,7 @@
       <video
         :src="downloadURL"
         ref="videoElementRef"
+        @ended="stopAnalyzing"
         crossorigin="anonymous"
         autoplay
         muted="true"
@@ -32,7 +33,7 @@
           ></div>
         </div>
       </div>
-      <div class="flex md:col-span-full justify-center">
+      <div class="grid md:col-span-full justify-center">
         <button
           @click="estimateVideoPoses"
           class="m-auto p-3 bg-black text-white rounded"
@@ -63,6 +64,12 @@ export default defineComponent({
     const analysisData = ref({});
     const downloadURL = ref();
     const videoElementRef = ref(null);
+    const analyzing = ref(true);
+
+    function stopAnalyzing() {
+      analyzing.value = false;
+      console.log("Analyzing = ", analyzing.value);
+    }
 
     async function estimateVideoPoses() {
       const net = await posenet.load();
@@ -76,11 +83,15 @@ export default defineComponent({
       }
 
       const intervalID = setInterval(() => {
-        try {
-          estimateFrame(net);
-        } catch (error) {
+        if (analyzing.value) {
+          try {
+            estimateFrame(net);
+          } catch (error) {
+            clearInterval(intervalID);
+            alert(error);
+          }
+        } else {
           clearInterval(intervalID);
-          alert(error);
         }
       }, Math.round(1000 / frameRate));
     }
@@ -106,7 +117,9 @@ export default defineComponent({
       analysisData,
       downloadURL,
       videoElementRef,
-      estimateVideoPoses
+      estimateVideoPoses,
+      analyzing,
+      stopAnalyzing
     };
   }
 });
