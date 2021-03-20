@@ -1,15 +1,21 @@
 <template>
   <div class="h-screen w-full">
     <div class="grid grid-cols-2 md:grid-cols-3 gap-10 p-10">
-      <video
-        :src="downloadURL"
-        ref="videoElementRef"
-        @ended="stopAnalyzing"
-        crossorigin="anonymous"
-        autoplay
-        muted="true"
-        class="bg-black p-1 rounded col-span-2"
-      />
+      <div class="relative col-span-2">
+        <canvas
+          class="absolute top-0 left-0 w-full h-full z-10"
+          ref="canvasRef"
+        />
+        <video
+          :src="downloadURL"
+          ref="videoElementRef"
+          @ended="stopAnalyzing"
+          crossorigin="anonymous"
+          autoplay
+          muted="true"
+          class="rounded w-full h-full"
+        />
+      </div>
       <div class="grid grid-cols-1 gap-10">
         <div class="self-center">
           <p class="pr-2 text-lg font-bold">Elbow</p>
@@ -58,6 +64,7 @@ export default defineComponent({
   name: "AnalysisContent",
   setup() {
     const frameRate = 20;
+    const minConfidence = 0.0;
 
     const route = useRoute();
 
@@ -65,33 +72,92 @@ export default defineComponent({
     const downloadURL = ref();
     const videoElementRef = ref(null);
     const analyzing = ref(true);
+    const poses = ref([]);
+    const canvasRef = ref(null);
 
     function stopAnalyzing() {
       analyzing.value = false;
       console.log("Analyzing = ", analyzing.value);
     }
 
+    function drawPoint(y, x, r) {
+      var ctx = canvasRef.value.getContext("2d");
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, 2 * Math.PI);
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fill();
+    }
+
+    function drawKeypoints(keypoints) {
+      for (let i = 0; i < keypoints.length; i++) {
+        const keypoint = keypoints[i];
+        console.log(`keypoint in drawkeypoints ${keypoint}`);
+        const { y, x } = keypoint.position;
+        drawPoint(y, x, 10);
+      }
+    }
+
+    function drawSegment(pair1, pair2, color, scale) {
+      var ctx = canvasRef.value.getContext("2d");
+      ctx.beginPath();
+      ctx.moveTo(pair1.x * scale, pair1.y * scale);
+      ctx.lineTo(pair2.x * scale, pair2.y * scale);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = color;
+      ctx.stroke();
+    }
+
+    function drawSkeleton(keypoints) {
+      const color = "#FFFFFF";
+      const adjacentKeyPoints = posenet.getAdjacentKeyPoints(
+        keypoints,
+        minConfidence
+      );
+
+      adjacentKeyPoints.forEach((keypoint) => {
+        drawSegment(keypoint[0].position, keypoint[1].position, color, 1);
+      });
+    }
+
     async function estimateVideoPoses() {
-      const net = await posenet.load();
+      const net = await posenet.load({
+        inputResolution: {
+          width: videoElementRef.value.videoWidth,
+          height: videoElementRef.value.videoHeight
+        }
+      });
 
       async function estimateFrame(net) {
-        const pose = await net.estimatePoses(videoElementRef.value, {
-          decodingMethod: "single-person"
-        });
-        console.log(pose);
+        const pose = await net.estimateSinglePose(videoElementRef.value);
         return pose;
       }
 
-      const intervalID = setInterval(() => {
+      const intervalID = setInterval(async () => {
         if (analyzing.value) {
           try {
-            estimateFrame(net);
+            const pose = await estimateFrame(net);
+            var videoWidth = videoElementRef.value.videoWidth;
+            var videoHeight = videoElementRef.value.videoHeight;
+
+            canvasRef.value.width = videoWidth;
+            canvasRef.value.height = videoHeight;
+
+            var ctx = canvasRef.value.getContext("2d");
+            ctx.clearRect(0, 0, videoWidth, videoHeight);
+            ctx.save();
+            ctx.drawImage(videoElementRef.value, 0, 0, videoWidth, videoHeight);
+            ctx.restore();
+            console.log(pose.keypoints);
+            drawKeypoints(pose.keypoints);
+            drawSkeleton(pose.keypoints);
+            poses.value.push(pose);
           } catch (error) {
             clearInterval(intervalID);
-            alert(error);
+            console.error(error);
           }
         } else {
           clearInterval(intervalID);
+          console.log(poses.value);
         }
       }, Math.round(1000 / frameRate));
     }
@@ -119,7 +185,8 @@ export default defineComponent({
       videoElementRef,
       estimateVideoPoses,
       analyzing,
-      stopAnalyzing
+      stopAnalyzing,
+      canvasRef
     };
   }
 });
