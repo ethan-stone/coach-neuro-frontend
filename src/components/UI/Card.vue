@@ -6,7 +6,6 @@
 
 <script lang="ts">
 import { defineComponent, reactive, computed } from "vue";
-import "../index.css";
 
 export default defineComponent({
   name: "Card",
