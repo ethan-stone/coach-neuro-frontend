@@ -1,7 +1,9 @@
 <template>
   <user>
     <template v-slot:user="{ user }">
-      <analyses-content v-if="user" />
+      <Suspense v-if="user">
+        <analyses-content />
+      </Suspense>
       <login-page v-else />
     </template>
   </user>

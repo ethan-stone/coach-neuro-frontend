@@ -75,9 +75,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { auth, db, storage } from "../firebase";
+import { firebase, auth, db, storage } from "../firebase";
 import { nanoid } from "nanoid";
 import { useRouter } from "vue-router";
+import Analysis from "../interfaces/analysis";
 import BaseDropdown from "./ui/BaseDropdown.vue";
 import RadioButton from "./ui/RadioButton.vue";
 
@@ -115,39 +116,52 @@ export default defineComponent({
       ctx.emit("close-modal");
     }
 
-    async function createAnalysis() {
-      const { optionName, ...rest } = radioButtons.value.find((e) => {
-        return e.isSelected;
-      });
-
-      var storageRef = storage.ref();
-
-      var fileName = file.value.files[0].name;
+    async function uploadVideo(
+      storageRef: firebase.storage.Reference,
+      fileName: string
+    ): Promise<string> {
+      // create video reference
       var videoId = nanoid();
       var videoRef = storageRef.child(
         auth.currentUser.uid + "/" + videoId + "." + fileName.split(".").pop()
       );
 
-      videoRef
+      // upload video and return path in storage
+      return videoRef
         .put(file.value.files[0])
         .then((snapshot) => {
-          var videoPath = snapshot.metadata.fullPath;
-          db.collection("users")
-            .doc(auth.currentUser.uid)
-            .collection("analyses")
-            .add({
-              name: newAnalysisName.value,
-              category: optionName,
-              videoPath: videoPath
-            })
-            .then((docRef) => {
-              console.log("New analysis created with ID: ", docRef.id);
-              emitCloseModalEvent();
-              router.push("/analysis/" + docRef.id);
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+          return snapshot.metadata.fullPath;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+
+    async function createAnalysis() {
+      const { optionName, ...rest } = radioButtons.value.find((e) => {
+        return e.isSelected;
+      });
+
+      // upload video to storage
+      const storageRef = storage.ref();
+      const fileName = file.value.files[0].name;
+      const videoPath: string = await uploadVideo(storageRef, fileName);
+
+      // create new entry in analysis document in database
+      const newAnalysis: Analysis = {
+        owner: auth.currentUser.uid,
+        analysisName: newAnalysisName.value,
+        analysisCategory: optionName,
+        videoPath: videoPath,
+        poses: ""
+      };
+
+      db.collection("analyses")
+        .add(newAnalysis)
+        .then((docRef) => {
+          console.log("New analysis created with ID: ", docRef.id);
+          emitCloseModalEvent();
+          router.push("/analysis/" + docRef.id);
         })
         .catch((error) => {
           console.error(error);

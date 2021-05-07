@@ -23,7 +23,7 @@ export default defineComponent({
     AnalysesSidebar,
     NewAnalysisModal
   },
-  setup() {
+  async setup() {
     const isAnalysisModalToggled = ref(false);
     const analyses = ref([]);
 
@@ -31,14 +31,19 @@ export default defineComponent({
       isAnalysisModalToggled.value = true;
     }
 
-    db.collection("users")
-      .doc(auth.currentUser.uid)
+    const usersAnalysesQuery = db
       .collection("analyses")
+      .where("owner", "==", auth.currentUser.uid);
+
+    await usersAnalysesQuery
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           analyses.value.push({ ...doc.data(), id: doc.id });
         });
+      })
+      .catch((error) => {
+        console.error(error);
       });
 
     return {
