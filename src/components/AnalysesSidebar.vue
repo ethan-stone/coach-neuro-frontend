@@ -40,7 +40,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import BaseDropdown from "./UI/BaseDropdown.vue";
+import BaseDropdown from "./ui/BaseDropdown.vue";
 
 export default defineComponent({
   name: "AnalysesSidebar",

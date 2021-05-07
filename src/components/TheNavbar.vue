@@ -225,7 +225,7 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import BaseDropdown from "./UI/BaseDropdown.vue";
+import BaseDropdown from "./ui/BaseDropdown.vue";
 
 export default defineComponent({
   name: "TheNavbar",

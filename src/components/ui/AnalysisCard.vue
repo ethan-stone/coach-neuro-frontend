@@ -34,7 +34,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import ColoredListItem from "./ColoredListItem.vue";
+import ColoredListItem from "./BaseListItem.vue";
 export default defineComponent({
   name: "AnalysisCard",
   components: {

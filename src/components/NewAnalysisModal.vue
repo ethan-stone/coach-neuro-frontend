@@ -78,8 +78,8 @@ import { defineComponent, ref } from "vue";
 import { auth, db, storage } from "../firebase";
 import { nanoid } from "nanoid";
 import { useRouter } from "vue-router";
-import BaseDropdown from "./UI/BaseDropdown.vue";
-import RadioButton from "./UI/RadioButton.vue";
+import BaseDropdown from "./ui/BaseDropdown.vue";
+import RadioButton from "./ui/RadioButton.vue";
 
 export default defineComponent({
   name: "NewAnalysisModal",
