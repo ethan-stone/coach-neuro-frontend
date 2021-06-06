@@ -27,7 +27,13 @@
         <div class="self-center">
           <p class="pr-2 text-lg font-bold">Legs</p>
           <div
-            class="h-6 bg-gradient-to-r from-yellow-200 to-yellow-500 rounded-lg"
+            class="
+              h-6
+              bg-gradient-to-r
+              from-yellow-200
+              to-yellow-500
+              rounded-lg
+            "
             style="width: 66%"
           ></div>
         </div>
@@ -54,7 +60,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
-import { auth, db, storage } from "../firebase";
+import { auth, db, storage } from "../../firebase";
 
 //https://www.twilio.com/blog/pose-detection-video-tensorflow-js
 

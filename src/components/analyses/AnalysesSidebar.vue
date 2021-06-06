@@ -1,10 +1,34 @@
 <template>
   <nav
-    class="flex flex-col bg-white dark:bg-gray-900 w-80 px-12 pt-4 pb-6 border-r-2"
+    class="
+      flex flex-col
+      bg-white
+      dark:bg-gray-900
+      w-80
+      px-12
+      pt-4
+      pb-6
+      border-r-2
+    "
   >
     <button
       type="button"
-      class="inline-flex py-3 px-2 justify-center w-full rounded border border-gray-300 shadow-sm bg-green-400 text-sm font-medium text-black hover:bg-green-600 focus:outline-none"
+      class="
+        inline-flex
+        py-3
+        px-2
+        justify-center
+        w-full
+        rounded
+        border border-gray-300
+        shadow-sm
+        bg-green-400
+        text-sm
+        font-medium
+        text-black
+        hover:bg-green-600
+        focus:outline-none
+      "
       @click="emitOpenModalEvent"
     >
       <span class="pr-2">New Analysis</span>
@@ -40,7 +64,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import BaseDropdown from "./ui/BaseDropdown.vue";
+import BaseDropdown from "../common/BaseDropdown.vue";
 
 export default defineComponent({
   name: "AnalysesSidebar",

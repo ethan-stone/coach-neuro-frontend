@@ -1,6 +1,16 @@
 <template>
   <div
-    class="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50"
+    class="
+      h-screen
+      w-full
+      fixed
+      left-0
+      top-0
+      flex
+      justify-center
+      items-center
+      bg-black bg-opacity-50
+    "
   >
     <div
       class="p-4 bg-white rounded-lg shadow-lg relative w-96 md:w-2/3 lg:w-1/2"
@@ -14,7 +24,21 @@
       >
       <input
         v-model="newAnalysisName"
-        class="bg-gray-100 appearance-none border focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight"
+        class="
+          bg-gray-100
+          appearance-none
+          border
+          focus:outline-none
+          focus:ring-2 focus:ring-black
+          focus:border-transparent
+          rounded
+          w-full
+          mt-2
+          py-2
+          px-3
+          text-gray-700
+          leading-tight
+        "
         id="title"
         type="text"
         name="analysis-name"
@@ -43,7 +67,17 @@
       >
       <div class="w-full mt-2">
         <div
-          class="relative h-40 rounded-lg border-dashed border-2 border-gray-200 bg-white flex justify-center items-center hover:cursor-pointer"
+          class="
+            relative
+            h-40
+            rounded-lg
+            border-dashed border-2 border-gray-200
+            bg-white
+            flex
+            justify-center
+            items-center
+            hover:cursor-pointer
+          "
         >
           <div class="absolute">
             <div class="flex flex-col items-center">
@@ -63,7 +97,17 @@
       </div>
       <div class="mt-3 text-center pb-3">
         <button
-          class="w-full h-12 text-lg rounded bg-gradient-to-r from-gray-300 via-gray-700 to-gray-300 text-white"
+          class="
+            w-full
+            h-12
+            text-lg
+            rounded
+            bg-gradient-to-r
+            from-gray-300
+            via-gray-700
+            to-gray-300
+            text-white
+          "
           @click="createAnalysis"
         >
           Create
@@ -75,12 +119,12 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { firebase, auth, db, storage } from "../firebase";
+import { firebase, auth, db, storage } from "../../firebase";
 import { nanoid } from "nanoid";
 import { useRouter } from "vue-router";
-import Analysis from "../interfaces/analysis";
-import BaseDropdown from "./ui/BaseDropdown.vue";
-import RadioButton from "./ui/RadioButton.vue";
+import Analysis from "../../interfaces/analysis";
+import BaseDropdown from "../common/BaseDropdown.vue";
+import RadioButton from "../common/RadioButton.vue";
 
 export default defineComponent({
   name: "NewAnalysisModal",

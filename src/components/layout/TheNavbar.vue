@@ -34,7 +34,14 @@
               href="/"
               aria-label="Our product"
               title="Our product"
-              class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+              class="
+                font-medium
+                tracking-wide
+                text-gray-700
+                transition-colors
+                duration-200
+                hover:text-deep-purple-accent-400
+              "
               >Product</a
             >
           </li>
@@ -43,7 +50,14 @@
               href="/"
               aria-label="Our product"
               title="Our product"
-              class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+              class="
+                font-medium
+                tracking-wide
+                text-gray-700
+                transition-colors
+                duration-200
+                hover:text-deep-purple-accent-400
+              "
               >Features</a
             >
           </li>
@@ -52,7 +66,14 @@
               href="/"
               aria-label="Product pricing"
               title="Product pricing"
-              class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+              class="
+                font-medium
+                tracking-wide
+                text-gray-700
+                transition-colors
+                duration-200
+                hover:text-deep-purple-accent-400
+              "
               >Pricing</a
             >
           </li>
@@ -61,7 +82,14 @@
               href="/"
               aria-label="About us"
               title="About us"
-              class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+              class="
+                font-medium
+                tracking-wide
+                text-gray-700
+                transition-colors
+                duration-200
+                hover:text-deep-purple-accent-400
+              "
               >About us</a
             >
           </li>
@@ -73,14 +101,28 @@
             href="/"
             aria-label="Sign in"
             title="Sign in"
-            class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+            class="
+              font-medium
+              tracking-wide
+              text-gray-700
+              transition-colors
+              duration-200
+              hover:text-deep-purple-accent-400
+            "
             >Sign in</a
           >
         </li>
         <li>
           <a
             href="/"
-            class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+            class="
+              font-medium
+              tracking-wide
+              text-gray-700
+              transition-colors
+              duration-200
+              hover:text-deep-purple-accent-400
+            "
             aria-label="Sign up"
             title="Sign up"
           >
@@ -92,7 +134,17 @@
         <button
           aria-label="Open Menu"
           title="Open Menu"
-          class="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"
+          class="
+            p-2
+            -mr-1
+            transition
+            duration-200
+            rounded
+            focus:outline-none
+            focus:shadow-outline
+            hover:bg-deep-purple-50
+            focus:bg-deep-purple-50
+          "
           @click="isMenuOpen = true"
         >
           <svg class="w-5 text-gray-600" viewBox="0 0 24 24">
@@ -136,7 +188,14 @@
                     <rect x="14" y="11" width="7" height="12"></rect>
                   </svg>
                   <span
-                    class="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase"
+                    class="
+                      ml-2
+                      text-xl
+                      font-bold
+                      tracking-wide
+                      text-gray-800
+                      uppercase
+                    "
                     >Company</span
                   >
                 </a>
@@ -145,7 +204,18 @@
                 <button
                   aria-label="Close Menu"
                   title="Close Menu"
-                  class="p-2 -mt-2 -mr-2 transition duration-200 rounded hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                  class="
+                    p-2
+                    -mt-2
+                    -mr-2
+                    transition
+                    duration-200
+                    rounded
+                    hover:bg-gray-200
+                    focus:bg-gray-200
+                    focus:outline-none
+                    focus:shadow-outline
+                  "
                   @click="isMenuOpen = false"
                 >
                   <svg class="w-5 text-gray-600" viewBox="0 0 24 24">
@@ -164,7 +234,14 @@
                     href="/"
                     aria-label="Our product"
                     title="Our product"
-                    class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                    class="
+                      font-medium
+                      tracking-wide
+                      text-gray-700
+                      transition-colors
+                      duration-200
+                      hover:text-deep-purple-accent-400
+                    "
                     >Product</a
                   >
                 </li>
@@ -173,7 +250,14 @@
                     href="/"
                     aria-label="Our product"
                     title="Our product"
-                    class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                    class="
+                      font-medium
+                      tracking-wide
+                      text-gray-700
+                      transition-colors
+                      duration-200
+                      hover:text-deep-purple-accent-400
+                    "
                     >Features</a
                   >
                 </li>
@@ -182,7 +266,14 @@
                     href="/"
                     aria-label="Product pricing"
                     title="Product pricing"
-                    class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                    class="
+                      font-medium
+                      tracking-wide
+                      text-gray-700
+                      transition-colors
+                      duration-200
+                      hover:text-deep-purple-accent-400
+                    "
                     >Pricing</a
                   >
                 </li>
@@ -191,7 +282,14 @@
                     href="/"
                     aria-label="About us"
                     title="About us"
-                    class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                    class="
+                      font-medium
+                      tracking-wide
+                      text-gray-700
+                      transition-colors
+                      duration-200
+                      hover:text-deep-purple-accent-400
+                    "
                     >About us</a
                   >
                 </li>
@@ -200,14 +298,28 @@
                     href="/"
                     aria-label="Sign in"
                     title="Sign in"
-                    class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                    class="
+                      font-medium
+                      tracking-wide
+                      text-gray-700
+                      transition-colors
+                      duration-200
+                      hover:text-deep-purple-accent-400
+                    "
                     >Sign in</a
                   >
                 </li>
                 <li>
                   <a
                     href="/"
-                    class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                    class="
+                      font-medium
+                      tracking-wide
+                      text-gray-700
+                      transition-colors
+                      duration-200
+                      hover:text-deep-purple-accent-400
+                    "
                     aria-label="Sign up"
                     title="Sign up"
                   >
@@ -225,7 +337,7 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import BaseDropdown from "./ui/BaseDropdown.vue";
+import BaseDropdown from "../common/BaseDropdown.vue";
 
 export default defineComponent({
   name: "TheNavbar",

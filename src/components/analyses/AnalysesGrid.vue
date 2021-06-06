@@ -20,7 +20,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import AnalysisCard from "./ui/AnalysisCard.vue";
+import AnalysisCard from "../common/AnalysisCard.vue";
 
 export default defineComponent({
   name: "AnalysesGrid",

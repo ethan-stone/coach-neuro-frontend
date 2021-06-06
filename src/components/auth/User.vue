@@ -6,7 +6,7 @@
 
 <script>
 import { ref, defineComponent } from "vue";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 
 export default defineComponent({
   name: "User",

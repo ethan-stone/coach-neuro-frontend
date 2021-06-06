@@ -11,10 +11,10 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import { auth, db } from "../firebase";
+import { auth, db } from "../../firebase";
 import AnalysesGrid from "./AnalysesGrid.vue";
 import AnalysesSidebar from "./AnalysesSidebar.vue";
-import NewAnalysisModal from "./NewAnalysisModal.vue";
+import NewAnalysisModal from "./AnalysisCreateModal.vue";
 
 export default defineComponent({
   name: "Analyses",

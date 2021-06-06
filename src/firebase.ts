@@ -4,13 +4,13 @@ import "firebase/firestore";
 import "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDTJZwkehj-5FKW2oV1kiDj0HFnH9vbwY4",
-  authDomain: "coachneuro.firebaseapp.com",
-  projectId: "coachneuro",
-  storageBucket: "coachneuro.appspot.com",
-  messagingSenderId: "405525062820",
-  appId: "1:405525062820:web:ef03f911b40a91ae03f231",
-  measurementId: "G-BKF04767N4"
+  apiKey: "AIzaSyAy7Uowit2k9y2AtULXrbHBC9bmdR-BLg0",
+  authDomain: "coachneuro-dev.firebaseapp.com",
+  projectId: "coachneuro-dev",
+  storageBucket: "coachneuro-dev.appspot.com",
+  messagingSenderId: "52792328185",
+  appId: "1:52792328185:web:84e8952f8a93d9bfa3c728",
+  measurementId: "G-15NBV6R233"
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
