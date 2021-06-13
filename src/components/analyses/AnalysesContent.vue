@@ -1,11 +1,14 @@
 <template>
-  <div class="h-screen w-full flex overflow-hidden">
-    <analyses-sidebar @open-modal="toggleAnalysisModal" />
-    <new-analysis-modal
-      v-if="isAnalysisModalToggled"
-      @close-modal="isAnalysisModalToggled = false"
-    />
-    <analyses-grid :analyses="analyses" />
+  <div>
+    <div v-if="!isLoading" class="h-screen w-full flex overflow-hidden">
+      <analyses-sidebar @open-modal="toggleAnalysisModal" />
+      <new-analysis-modal
+        v-if="isAnalysisModalToggled"
+        @close-modal="isAnalysisModalToggled = false"
+      />
+      <analyses-grid :analyses="analyses" />
+    </div>
+    <div v-else>Loading</div>
   </div>
 </template>
 
@@ -23,9 +26,10 @@ export default defineComponent({
     AnalysesSidebar,
     NewAnalysisModal
   },
-  async setup() {
+  setup() {
     const isAnalysisModalToggled = ref(false);
     const analyses = ref([]);
+    const isLoading = ref(true);
 
     function toggleAnalysisModal() {
       isAnalysisModalToggled.value = true;
@@ -35,21 +39,26 @@ export default defineComponent({
       .collection("analyses")
       .where("owner", "==", auth.currentUser.uid);
 
-    await usersAnalysesQuery
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          analyses.value.push({ ...doc.data(), id: doc.id });
+    async function fetchUsersAnalyses() {
+      await usersAnalysesQuery
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            analyses.value.push({ ...doc.data(), id: doc.id });
+          });
+        })
+        .catch((error) => {
+          console.error(error);
         });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      isLoading.value = false;
+    }
 
+    fetchUsersAnalyses();
     return {
       isAnalysisModalToggled,
       toggleAnalysisModal,
-      analyses
+      analyses,
+      isLoading
     };
   }
 });

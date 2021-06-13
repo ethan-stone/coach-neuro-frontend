@@ -1,9 +1,10 @@
 <template>
   <user>
     <template v-slot:user="{ user }">
-      <Suspense v-if="user">
+      <div v-if="user">
+        <the-navbar></the-navbar>
         <analyses-content />
-      </Suspense>
+      </div>
       <login-page v-else />
     </template>
   </user>
@@ -14,13 +15,15 @@ import { defineComponent } from "vue";
 import User from "../components/auth/User.vue";
 import LoginPage from "./LoginPage.vue";
 import AnalysesContent from "../components/analyses/AnalysesContent.vue";
+import TheNavbar from "../components/layout/TheNavbar.vue";
 
 export default defineComponent({
   name: "Analyses",
   components: {
     User,
     LoginPage,
-    AnalysesContent
+    AnalysesContent,
+    TheNavbar
   }
 });
 </script>

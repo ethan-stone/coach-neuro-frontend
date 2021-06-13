@@ -7,12 +7,11 @@
 <script>
 import { ref, defineComponent } from "vue";
 import { auth } from "../../firebase";
+import { user } from "../../composables/user";
 
 export default defineComponent({
   name: "User",
   setup() {
-    const user = ref(null);
-
     const unsubscribe = auth.onAuthStateChanged(
       (firebaseUser) => (user.value = firebaseUser)
     );

@@ -18,5 +18,4 @@ export default defineComponent({
   components: { User, AnalysisContent, LoginPage }
 });
 </script>
-, LoginPage
 <style></style>
